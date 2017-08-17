@@ -1,0 +1,15 @@
+<Asset>
+  <CommonProperty>
+    <MyAssetName MyAssetName="power0" />
+    <RoleInfo RoleInfo="power1" />
+    <TriggerList TriggerList="power2" />
+    <SelectedTrigger SelectedTrigger="power3" />
+    <AfterEffectList AfterEffectList="power4" />
+    <SelectedAfterEffect SelectedAfterEffect="power5" />
+    <BeforeEffectList BeforeEffectList="power6" />
+    <SelectedBeforeEffect SelectedBeforeEffect="power7" />
+    <Location Location="power8" />
+    <IsInventory IsInventory="power9" />
+    <BoundingBox BoundingBox="power10" />
+  </CommonProperty>
+</Asset>
