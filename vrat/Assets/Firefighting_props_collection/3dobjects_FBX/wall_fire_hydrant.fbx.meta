@@ -3,8 +3,21 @@ guid: 95f9deef68c5bc441a988ddcf44f501f
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
+    100000: Camera
+    100002: Mesh
+    100004: Mesh 1
+    100006: //RootNode
+    400000: Camera
+    400002: Mesh
+    400004: Mesh 1
+    400006: //RootNode
+    2300000: Mesh
+    2300002: Mesh 1
+    3300000: Mesh
+    3300002: Mesh 1
     4300000: Mesh
     4300002: Mesh
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 2
@@ -67,7 +80,7 @@ ModelImporter:
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
-    skeletonHasParents: 1
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 1
   humanoidOversampling: 1

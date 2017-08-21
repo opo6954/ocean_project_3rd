@@ -12,6 +12,7 @@ namespace vrat
     public class ListOfXmlTemplate : XmlTemplate
     {
         List<XmlTemplate> xmlTemplateList = new List<XmlTemplate>();
+        public int selectedIdx = 0;
 
 
         public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement)
@@ -23,6 +24,7 @@ namespace vrat
             
             individualProperty.SetAttribute("name", propertyName);
             individualProperty.SetAttribute("type", propertyType);
+            individualProperty.SetAttribute("idx", selectedIdx.ToString());
 
             parentElement.AppendChild(individualProperty);
 
@@ -34,9 +36,14 @@ namespace vrat
             return individualProperty;
         }
 
-        public ListOfXmlTemplate(string _name, string _type) : base(_name, _type)
+        public ListOfXmlTemplate(string _name, string _type, int _idx) : base(_name, _type)
         {
+            selectedIdx = _idx;
+        }
 
+        public void setIdx(int _idx)
+        {
+            selectedIdx = _idx;
         }
 
         public bool addList(XmlTemplate _xt)
@@ -49,7 +56,17 @@ namespace vrat
             
             xmlTemplateList.Add(_xt);
             return true;
-            
+        }
+
+        public List<string> getListofAllName()
+        {
+            List<string> nameList = new List<string>();
+            for (int i = 0; i < xmlTemplateList.Count; i++)
+            {
+                nameList.Add(xmlTemplateList[i].Type + ":" +  xmlTemplateList[i].Name);
+            }
+
+            return nameList;
         }
 
         public XmlTemplate getXmlTemplate(string name)

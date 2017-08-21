@@ -24,5 +24,12 @@ public class CameraMovement : MonoBehaviour {
 
         myCamera.rotation = Quaternion.Euler(p);
 	}
+
+    public void OnClickAuthoringMode()
+    {
+        Application.LoadLevel(1);
+    }
+
+
 }
  

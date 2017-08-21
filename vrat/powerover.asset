@@ -2,9 +2,6 @@
   <CustomizedProperty>
     <vrat.PrimitiveXmlTemplate name="RoleInfo1" type="string" contents="Sailor" />
     <vrat.PrimitiveXmlTemplate name="IsInventory" type="bool" contents="False" />
-    <vrat.PrimitiveXmlTemplate name="SelectedTrigger" type="int" contents="0" />
-    <vrat.PrimitiveXmlTemplate name="SelectedBeforeEffect" type="int" contents="2" />
-    <vrat.PrimitiveXmlTemplate name="SelectedAfterEffect" type="int" contents="1" />
     <vrat.LocationXmlTemplate name="Location" type="location">
       <Position>
         <x>10</x>
@@ -17,13 +14,19 @@
         <z>210</z>
       </Rotation>
     </vrat.LocationXmlTemplate>
-    <vrat.ListOfXmlTemplate name="TriggerList" type="ListOfXmlTemplate">
+    <vrat.ListOfXmlTemplate name="TriggerList" type="ListOfXmlTemplate" idx="1">
       <vrat.ClassNameXmlTemplate name="myTrigger1" type="HoldTriggerTemplate" />
       <vrat.ClassNameXmlTemplate name="myTrigger2" type="ApproachTriggerTemplate" />
       <vrat.ClassNameXmlTemplate name="myTrigger3" type="ActTriggerTemplate" />
     </vrat.ListOfXmlTemplate>
-    <vrat.ListOfXmlTemplate name="EffectList" type="ListofXmlTemplate">
+    <vrat.ListOfXmlTemplate name="BeforeEffectList" type="ListofXmlTemplate" idx="0">
       <vrat.ClassNameXmlTemplate name="myEffect1" type="LockScreenEffect" />
+      <vrat.ClassNameXmlTemplate name="myEffect2" type="LockScreenEffect" />
+    </vrat.ListOfXmlTemplate>
+    <vrat.ListOfXmlTemplate name="AfterEffectList" type="ListofXmlTemplate" idx="2">
+      <vrat.ClassNameXmlTemplate name="myEffect1" type="LockScreenEffect" />
+      <vrat.ClassNameXmlTemplate name="myEffect2" type="LockScreenEffect" />
+      <vrat.ClassNameXmlTemplate name="myEffect3" type="LockScreenEffect" />
     </vrat.ListOfXmlTemplate>
   </CustomizedProperty>
 </ASSET>

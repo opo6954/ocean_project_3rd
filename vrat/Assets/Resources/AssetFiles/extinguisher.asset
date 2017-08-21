@@ -1,0 +1,32 @@
+<ASSET name="extinguisher">
+  <CustomizedProperty>
+    <vrat.PrimitiveXmlTemplate name="RoleInfo1" type="string" contents="Captain" />
+    <vrat.PrimitiveXmlTemplate name="IsInventory" type="bool" contents="True" />
+    <vrat.LocationXmlTemplate name="Location" type="location">
+      <Position>
+        <x>48.3093</x>
+        <y>-4.262233</y>
+        <z>-25.20486</z>
+      </Position>
+      <Rotation>
+        <x>270</x>
+        <y>141.9</y>
+        <z>0</z>
+      </Rotation>
+    </vrat.LocationXmlTemplate>
+    <vrat.ListOfXmlTemplate name="TriggerList" type="ListOfXmlTemplate" idx="0">
+      <vrat.ClassNameXmlTemplate name="myTrigger1" type="HoldTriggerTemplate" />
+      <vrat.ClassNameXmlTemplate name="myTrigger2" type="ApproachTriggerTemplate" />
+      <vrat.ClassNameXmlTemplate name="myTrigger3" type="ActTriggerTemplate" />
+    </vrat.ListOfXmlTemplate>
+    <vrat.ListOfXmlTemplate name="BeforeEffectList" type="ListofXmlTemplate" idx="0">
+      <vrat.ClassNameXmlTemplate name="myEffect1" type="LockScreenEffect" />
+      <vrat.ClassNameXmlTemplate name="myEffect2" type="LockScreenEffect" />
+    </vrat.ListOfXmlTemplate>
+    <vrat.ListOfXmlTemplate name="AfterEffectList" type="ListofXmlTemplate" idx="1">
+      <vrat.ClassNameXmlTemplate name="myEffect1" type="LockScreenEffect" />
+      <vrat.ClassNameXmlTemplate name="myEffect2" type="LockScreenEffect" />
+      <vrat.ClassNameXmlTemplate name="myEffect3" type="LockScreenEffect" />
+    </vrat.ListOfXmlTemplate>
+  </CustomizedProperty>
+</ASSET>

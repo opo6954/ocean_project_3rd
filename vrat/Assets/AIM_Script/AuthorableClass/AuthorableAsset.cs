@@ -17,12 +17,11 @@ namespace vrat
         //모든 obj별로 override하면 됨
 
 
-
+         
 
 
         public override void initialize()
         {
-            Debug.Log("init on authorableAsset...");
             base.initialize();
 
             ObjectType = OBJTYPE.ASSET;
@@ -32,39 +31,28 @@ namespace vrat
              * */
 
             initForAsset();
-
-
-           
-
-
-
-            
-
         }
 
         void Start()
         {
-            //initialize();
-            //testSerialize();
-            //testDeserialize();
-
         }
+
+
         void initForAsset()
         {
 
             variableContainer.addParameter(new PrimitiveXmlTemplate("RoleInfo1","string"));
             variableContainer.addParameter(new PrimitiveXmlTemplate("IsInventory","bool"));
-            variableContainer.addParameter(new PrimitiveXmlTemplate("SelectedTrigger","int"));
-            variableContainer.addParameter(new PrimitiveXmlTemplate("SelectedBeforeEffect", "int"));
-            variableContainer.addParameter(new PrimitiveXmlTemplate("SelectedAfterEffect", "int"));
             variableContainer.addParameter(new LocationXmlTemplate("Location", "location", new Location(new Vector3(10, 20, 30), new Vector3(50, 70, 210))));
 
 
-            ListOfXmlTemplate tl = new ListOfXmlTemplate("TriggerList", "ListOfXmlTemplate");
-            ListOfXmlTemplate et = new ListOfXmlTemplate("EffectList", "ListofXmlTemplate");
+            ListOfXmlTemplate tl = new ListOfXmlTemplate("TriggerList", "ListOfXmlTemplate",0);
+            ListOfXmlTemplate be = new ListOfXmlTemplate("BeforeEffectList", "ListofXmlTemplate",0);
+            ListOfXmlTemplate ae = new ListOfXmlTemplate("AfterEffectList", "ListofXmlTemplate",0);
 
             variableContainer.addParameter(tl);
-            variableContainer.addParameter(et);
+            variableContainer.addParameter(be);
+            variableContainer.addParameter(ae);
         }
 
 
@@ -72,33 +60,30 @@ namespace vrat
         public void exampleSerialize()
         {
             ObjectName = "over";
-            int idx;
-
+            
             (variableContainer.getParameters("RoleInfo1") as PrimitiveXmlTemplate).setparameter("Sailor");
             (variableContainer.getParameters("IsInventory") as PrimitiveXmlTemplate).setparameter(false.ToString());
 
-            idx = 0;
-
-            (variableContainer.getParameters("SelectedTrigger") as PrimitiveXmlTemplate).setparameter(idx.ToString());
-
-            idx = 2;
-            (variableContainer.getParameters("SelectedBeforeEffect") as PrimitiveXmlTemplate).setparameter(idx.ToString());
-
-            idx = 1;
-
-            (variableContainer.getParameters("SelectedAfterEffect") as PrimitiveXmlTemplate).setparameter(idx.ToString());
 
             ListOfXmlTemplate tl = variableContainer.getParameters("TriggerList") as ListOfXmlTemplate;
-            ListOfXmlTemplate et = variableContainer.getParameters("EffectList") as ListOfXmlTemplate;
+            ListOfXmlTemplate be = variableContainer.getParameters("BeforeEffectList") as ListOfXmlTemplate;
+            ListOfXmlTemplate ae = variableContainer.getParameters("AfterEffectList") as ListOfXmlTemplate;
+
+            tl.setIdx(1);
+            be.setIdx(0);
+            ae.setIdx(2);
             
 
-            et.addList(new ClassNameXmlTemplate("myEffect1", "LockScreenEffect"));
+            be.addList(new ClassNameXmlTemplate("myEffect1", "LockScreenEffect"));
+            be.addList(new ClassNameXmlTemplate("myEffect2", "LockScreenEffect"));
+
+            ae.addList(new ClassNameXmlTemplate("myEffect1", "LockScreenEffect"));
+            ae.addList(new ClassNameXmlTemplate("myEffect2", "LockScreenEffect"));
+            ae.addList(new ClassNameXmlTemplate("myEffect3", "LockScreenEffect"));
+
             tl.addList(new ClassNameXmlTemplate("myTrigger1", "HoldTriggerTemplate"));
             tl.addList(new ClassNameXmlTemplate("myTrigger2", "ApproachTriggerTemplate"));
             tl.addList(new ClassNameXmlTemplate("myTrigger3", "ActTriggerTemplate"));
-
-
-           
         }
 
         public void testSerialize(string xmlName)
@@ -108,6 +93,8 @@ namespace vrat
             serialize2Xml(document);
 
             document.Save(xmlName);
+
+            Debug.Log("Save xml with " + xmlName);
         }
 
         public void testDeserialize(string fileName )
@@ -172,14 +159,12 @@ namespace vrat
                     type = xac["type"].InnerText;
                     contents = xac["contents"].InnerText;
 
-                    Debug.Log("Node Name: " + className);
-                    Debug.Log("name: " + name);
-                    Debug.Log("type: " + type);
-                    Debug.Log("contents: " + contents);
 
                     if (variableContainer.checkParameter(name) == true)
                     {
                         XmlTemplate xt = variableContainer.getParameters(name);
+                        xt.ClassName = "PrimitiveXmlTemplate";
+
                         (xt as PrimitiveXmlTemplate).setparameter(contents);
                     }
                 }
@@ -188,15 +173,13 @@ namespace vrat
                     name = xac["name"].InnerText;
                     type = xac["type"].InnerText;
 
-                    Debug.Log("Node Name: " + className);
-                    Debug.Log("name: " + name);
-                    Debug.Log("type: " + type);
 
                     //location에 맞는 거 하기
 
                     if (variableContainer.checkParameter(name) == true)
                     {
                         XmlTemplate xt = variableContainer.getParameters(name);
+                        xt.ClassName = "LocationXmlTemplate";
 
                         Vector3 pos = new Vector3();
                         Vector3 rot = new Vector3();
@@ -230,10 +213,16 @@ namespace vrat
                 {
                     name = xac["name"].InnerText;
                     type = xac["type"].InnerText;
+                    string selectedIdx = xac["idx"].InnerText;
+
+
+
 
                     if (variableContainer.checkParameter(name) == true)
                     {
                         ListOfXmlTemplate xt = variableContainer.getParameters(name) as ListOfXmlTemplate;
+                        xt.ClassName = "ListOfXmlTemplate";
+                        xt.setIdx(int.Parse(selectedIdx));
 
                         foreach (XmlNode xnInner in xn.ChildNodes)
                         {
@@ -242,6 +231,7 @@ namespace vrat
                             string classNameInner = xnInner.Name;
                             string nameInner = xacInner["name"].InnerText;
                             string typeInner = xacInner["type"].InnerText;
+                            
 
                             XmlTemplate xmlTemplate = System.Activator.CreateInstance(System.Type.GetType(classNameInner), new object[]{nameInner, typeInner}) as XmlTemplate;
 
@@ -251,10 +241,15 @@ namespace vrat
                 }
             }
 
+            /*
+             * FOR DEBUG
+            Debug.Log(variableContainer.getNumberOfParameters());
+
             for(int i=0; i<variableContainer.getNumberOfParameters(); i++)
             {
                 Debug.Log(variableContainer.getParameters(i).Name);
             }
+             * */
 
             return true;
         }
