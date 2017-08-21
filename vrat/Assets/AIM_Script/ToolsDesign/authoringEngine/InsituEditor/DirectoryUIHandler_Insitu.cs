@@ -21,6 +21,7 @@ namespace vrat
             AuthorableAsset[] assetList = new AuthorableAsset[assetNameList.Count];
             string[] assetFullNameList = new string[assetNameList.Count];
 
+
             for (int i = 0; i < assetNameList.Count; i++)
             {
                 assetList[i] = new AuthorableAsset();

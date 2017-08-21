@@ -4,13 +4,13 @@
     <vrat.PrimitiveXmlTemplate name="IsInventory" type="bool" contents="True" />
     <vrat.LocationXmlTemplate name="Location" type="location">
       <Position>
-        <x>-1.195138</x>
-        <y>-3.350004</y>
-        <z>0.8368826</z>
+        <x>48.3093</x>
+        <y>-4.262233</y>
+        <z>-25.20486</z>
       </Position>
       <Rotation>
         <x>270</x>
-        <y>223.1</y>
+        <y>141.9</y>
         <z>0</z>
       </Rotation>
     </vrat.LocationXmlTemplate>

@@ -4,13 +4,13 @@
     <vrat.PrimitiveXmlTemplate name="IsInventory" type="bool" contents="False" />
     <vrat.LocationXmlTemplate name="Location" type="location">
       <Position>
-        <x>-2.540613</x>
+        <x>-3.924289</x>
         <y>-3.350004</y>
-        <z>4.202783</z>
+        <z>3.196733</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>101.2001</y>
+        <y>39.79998</y>
         <z>0</z>
       </Rotation>
     </vrat.LocationXmlTemplate>
@@ -19,11 +19,11 @@
       <vrat.ClassNameXmlTemplate name="myTrigger2" type="ApproachTriggerTemplate" />
       <vrat.ClassNameXmlTemplate name="myTrigger3" type="ActTriggerTemplate" />
     </vrat.ListOfXmlTemplate>
-    <vrat.ListOfXmlTemplate name="BeforeEffectList" type="ListofXmlTemplate" idx="1">
+    <vrat.ListOfXmlTemplate name="BeforeEffectList" type="ListofXmlTemplate" idx="0">
       <vrat.ClassNameXmlTemplate name="myEffect1" type="LockScreenEffect" />
       <vrat.ClassNameXmlTemplate name="myEffect2" type="LockScreenEffect" />
     </vrat.ListOfXmlTemplate>
-    <vrat.ListOfXmlTemplate name="AfterEffectList" type="ListofXmlTemplate" idx="1">
+    <vrat.ListOfXmlTemplate name="AfterEffectList" type="ListofXmlTemplate" idx="0">
       <vrat.ClassNameXmlTemplate name="myEffect1" type="LockScreenEffect" />
       <vrat.ClassNameXmlTemplate name="myEffect2" type="LockScreenEffect" />
       <vrat.ClassNameXmlTemplate name="myEffect3" type="LockScreenEffect" />
