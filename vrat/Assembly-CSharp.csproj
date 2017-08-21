@@ -50,7 +50,9 @@
      <Compile Include="Assets\AIM_Script\AuthorableClass\AuthorableAssetGroup.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\AuthorableEvent.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\AuthorableEventGroup.cs" />
+     <Compile Include="Assets\AIM_Script\AuthorableClass\AuthorableScenario.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\AuthorableTemplate.cs" />
+     <Compile Include="Assets\AIM_Script\AuthorableClass\AuthorableTransition.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\LoadShipEnvironment.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\ClassNameXmlTemplate.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\ListOfXmlTemplate.cs" />
@@ -102,6 +104,10 @@
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\LoadShipEditor\LoadShipEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\StageEditor\StageEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\SubwindowManager.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\Connection.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\ConnectionPoint.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\Node.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\NodeBasedEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\TimelineEditor.cs" />
      <Compile Include="Assets\Photon Unity Networking\Demos\Demo2DJumpAndRunWithPhysics\Scripts\Demo2DJumpAndRun.cs" />
      <Compile Include="Assets\Photon Unity Networking\Demos\Demo2DJumpAndRunWithPhysics\Scripts\JumpAndRunMovement.cs" />

@@ -10,7 +10,9 @@ using System.IO;
 namespace vrat
 {
 
-
+    /*
+     * Asset serialize를 위한 class로써 asset의 모든 정보를 저장할 수 있음
+     * */
     public class AuthorableAsset : ObjectTemplate
     {
         //xml 형식으로 serialize하기

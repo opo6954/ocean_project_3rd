@@ -22,7 +22,7 @@ namespace vrat
     //object의 종류임, 일단 asset, vent, scenario로 정리
     public enum OBJTYPE
     {
-        ASSET, EVENT, SCENARIO
+        ASSET, EVENT, TRANSITION, SCENARIO
     }
     
     public class VariableContainer
