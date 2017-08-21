@@ -16,6 +16,8 @@ namespace vrat
 
         //XmlTemplate의 형식(class 이름이 들어감 나중에 deserialize할 때 class instantiate할 시 필요함
         string type;
+
+        string className;
          
         protected bool isVariableSet;
 
@@ -30,7 +32,7 @@ namespace vrat
                 name = value;
             }
         }
-
+         
         public string Type
         {
             get
@@ -40,6 +42,18 @@ namespace vrat
             set
             {
                 type = value;
+            }
+        }
+
+        public string ClassName
+        {
+            get
+            {
+                return className;
+            }
+            set
+            {
+                className = value;
             }
         }
 

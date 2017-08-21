@@ -1,0 +1,6 @@
+편집 가능한 요소
+1. 문자열
+2. True or False
+3. 숫자 입력(Contraint 존재함))
+4. Location(in-situ에서 결정 혹은 여기서도 결정할 수 있도록 하자) --> position field와 rotation field가 존재함
+5. Trigger List랑 Effect List는 일단 보기만 하고 편집은 못하도록 하자

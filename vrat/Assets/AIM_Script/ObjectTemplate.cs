@@ -100,11 +100,11 @@ namespace vrat
         //object의 이름
         private string objectName;
 
-        protected VariableContainer variableContainer = new VariableContainer();
+        public VariableContainer variableContainer = new VariableContainer();
 
         private OBJTYPE objectType;
 
-        protected string ObjectName
+        public string ObjectName
         {
             get
             {
@@ -116,7 +116,7 @@ namespace vrat
             }
         }
 
-        protected OBJTYPE ObjectType
+        public OBJTYPE ObjectType
         {
             get
             {
@@ -144,6 +144,8 @@ namespace vrat
 
         //일단 가장 윗레벳에서 serialize2Xml 수행하기
         //파라미터로 받은 xml document에 관련 정보를 쓰면 됩니다
+
+        
 
         
 

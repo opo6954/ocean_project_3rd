@@ -7,51 +7,46 @@ using UnityEngine.EventSystems;
 
 namespace vrat
 {
-
+    /*
+     * 가장 윗 단에서 asset editor를 관리함
+     * 
+     * 
+     * 
+     * */
     public class AssetEditor : EditorTemplate
     {
+        [SerializeField]
+        private PropertyUIHandler propertyHandler;
+
+        [SerializeField]
+        private DirectoryUIHandler directoryHandler;
+
+
         GameObject rootUIObj;
+
         
 
-        string m_textPath;
+
+        
 
         void Start()
         {
+            rootUIObj = this.gameObject;
+            directoryHandler.assetEditor = this;
+
         }
 
-        //path 버튼 누를 때의 directory 이동
-        public void OnClickPathBox(string buttonIdx)
+        public void updateDirList()
         {
-            
+            directoryHandler.updateDirView();
         }
 
-        //file을 더블클릭 했을 때의 callback
-        //File일 경우 select, directory일 경우 그 directory 탐색을 함
-        //eventData에서 click count를 보면 됨
-        public void OnDoubleClickFileName(PointerEventData eventData)
+        //Dir로부터 pass된 asset임 이제 assetview로 보내자
+        public void callbackFromDirHandler(string fileName, AuthorableAsset aa, Texture2D previewImg)
         {
-            if (eventData.clickCount == 2)
-            {
-                Debug.Log("Double click...");
-            }
-        }
+            Debug.Log("Passed asset's name: " + aa.ObjectName);
 
-
-        protected override void OnClickAuthoring()
-        {
-            /*
-            m_fileBrowser = new FileBrowser(
-              new Rect(10, 10, 1000, 500),
-              "Choose Text File",
-              FileSelectedCallback
-          );
-            m_fileBrowser.SelectionPattern = "*.png";
-            //m_fileBrowser.SelectionPattern = "*.txt";
-             * */
-        }
-
-        protected void FileSelectedCallback(string path)
-        {
+            propertyHandler.setAuthorableAsset(fileName,aa,previewImg);
             
         }
     }
