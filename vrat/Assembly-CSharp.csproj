@@ -288,6 +288,17 @@
      <Compile Include="Assets\SUIMONO - WATER SYSTEM 2\_DEMO\SCRIPTS\sui_demo_trigger.cs" />
      <Compile Include="Assets\SUIMONO - WATER SYSTEM 2\_DEMO\SCRIPTS\ui_suimonoFps.cs" />
      <Compile Include="Assets\SUIMONO - WATER SYSTEM 2\_DEMO\SCRIPTS\ui_suimonoHandler.cs" />
+     <Compile Include="Assets\Scripts\ActiveStateToggler.cs" />
+     <Compile Include="Assets\Scripts\ApplicationManager.cs" />
+     <Compile Include="Assets\Scripts\ChangeColor.cs" />
+     <Compile Include="Assets\Scripts\DragMe.cs" />
+     <Compile Include="Assets\Scripts\DragPanel.cs" />
+     <Compile Include="Assets\Scripts\DropMe.cs" />
+     <Compile Include="Assets\Scripts\PanelManager.cs" />
+     <Compile Include="Assets\Scripts\ResizePanel.cs" />
+     <Compile Include="Assets\Scripts\ScrollDetailTexture.cs" />
+     <Compile Include="Assets\Scripts\ShowSliderValue.cs" />
+     <Compile Include="Assets\Scripts\TiltWindow.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
      <Compile Include="Assets\SteamVR\Extras\SteamVR_Teleporter.cs" />
@@ -422,6 +433,7 @@
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\SHADERS\SuimonoDistanceBlur.shader" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\_DEMO\OBJECTS\Shaders\Suimono2_Demo_HairSpec.shader" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\RESOURCES\SUIMONO_PRESETS_Built-In Presets\SUIMONO_PRESET_Calm Clear.txt" />
+     <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />
      <None Include="Assets\SteamVR\InteractionSystem\Teleport\Shaders\Highlight.shader" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\SHADERS\Suimono2_FX_Fog.shader" />
@@ -430,6 +442,7 @@
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\_DEMO\OBJECTS\Shaders\Suimono2_Demo_Skin.shader" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\RESOURCES\SUIMONO_PRESETS_Custom\SUIMONO_PRESET_CustomTest.txt" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\SHADERS\Suimono2_surface_under.shader" />
+     <None Include="Assets\Textures and Sprites\SF UI\Background\LICENSE.txt" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\SHADERS\Suimono2_depthmask2.shader" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\_DEMO\TERRAIN\Shaders\suimono2_demo_flora_single.shader" />
      <None Include="Assets\Standard Assets\Environment\Water (Basic)\Shaders\FXWaterBasic.shader" />
@@ -444,6 +457,7 @@
      <None Include="Assets\modern\materials\glass.shader" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\SHADERS\Suimono2_FX_WakeMask.shader" />
      <None Include="Assets\Ultra_Real_Fire_Effects\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\CameraMotionBlurDX11.shader" />
+     <None Include="Assets\Materials\UI-Default-No-Alpha.shader" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\SHADERS\Suimono2_surface_scale.shader" />
      <None Include="Assets\Ultra_Real_Fire_Effects\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
      <None Include="Assets\SUIMONO - WATER SYSTEM 2\SHADERS\Suimono2_depthmask.shader" />
