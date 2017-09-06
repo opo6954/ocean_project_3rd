@@ -98,11 +98,12 @@
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\SetTypeTemplate.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\CameraController.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\EditorTemplate.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\EnvironmentEditor\EnvironmentEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\InsituEditor\DirectoryUIHandler_Insitu.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\InsituEditor\InsituEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\InsituEditor\LocateAssetWithRay.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\InstructionEditor\InstructionEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\LoadShipEditor\LoadShipEditor.cs" />
-     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\StageEditor\StageEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\SubwindowManager.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\Connection.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\ConnectionPoint.cs" />

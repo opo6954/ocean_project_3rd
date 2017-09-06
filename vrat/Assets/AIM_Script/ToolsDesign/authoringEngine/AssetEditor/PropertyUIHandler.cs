@@ -115,6 +115,7 @@ namespace vrat
                     var q = xt as PrimitiveXmlTemplate;
                     go.GetComponent<PropertyVisualizeHandler>().visualizeProperty(q,i);
                 }
+                    //location xml template일 경우 in-situ를 위한 버튼을 놓자
                 else if(xt.ClassName == "LocationXmlTemplate")
                 {
                     var q = xt as LocationXmlTemplate;

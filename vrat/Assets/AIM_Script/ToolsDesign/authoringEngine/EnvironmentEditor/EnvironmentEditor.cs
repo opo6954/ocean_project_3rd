@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace vrat
 {
-    public class StageEditor : EditorTemplate
+    public class EnvironmentEditor : EditorTemplate
     {
 
         // Use this for initialization
