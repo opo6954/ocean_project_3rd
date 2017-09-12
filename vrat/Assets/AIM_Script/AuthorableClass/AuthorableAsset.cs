@@ -34,7 +34,7 @@ namespace vrat
 
             initForAsset();
         }
-
+         
         void Start()
         {
         }
@@ -88,30 +88,11 @@ namespace vrat
             tl.addList(new ClassNameXmlTemplate("myTrigger3", "ActTriggerTemplate"));
         }
 
-        public void testSerialize(string xmlName)
-        {
-            XmlDocument document = new XmlDocument();
+        
 
-            serialize2Xml(document);
 
-            document.Save(xmlName);
 
-            Debug.Log("Save xml with " + xmlName);
-        }
-
-        public void testDeserialize(string fileName )
-        {
-            XmlDocument ppa = new XmlDocument();
-
-            ppa.Load(fileName);
-
-            XmlNodeList pq = ppa.ChildNodes;
-
-            
-
-            deserializeFromXml(pq);
-
-        }
+        
 
 
         //일단 모든 asset에 공통된 얘들을 불러오자

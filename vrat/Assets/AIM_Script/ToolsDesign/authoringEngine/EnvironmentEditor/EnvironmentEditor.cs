@@ -10,28 +10,74 @@ namespace vrat
      * 3. 이후 방이 instantiate됨
      * 4. 사실적 효고를 위한 asset이 아닌 기타 배경이 되는 요소들의 배치
      * */
-    public class EnvironmentEditor : EditorTemplate
+    public class EnvironmentEditor : FileExplorerTemplate
     {
-        public EnvironmentEditor()
+        RoomXmlTemplate currRoom;
+
+        public override void initialize()
         {
+
+            fileType = "room";
+            fileSavePath = Application.dataPath + "/Resources/RoomFiles/";
+            base.initialize();
+            //Test for serialize
+
+            //Test for room file serialize
+
+            RoomXmlTemplate r1 = new RoomXmlTemplate();
+
+            r1.initialize();
+            r1.exampleSerialize();
+            r1.testSerialize("test.room");
+
+            RoomXmlTemplate r2 = new RoomXmlTemplate();
+            r2.initialize();
+
+            r2.testDeserialize("test.room");
+
+            Debug.Log("powerover");
+
+            Debug.Log(r2.variableContainer.getParameters(0));
+
+
         }
 
-        //방 구조를 열 수 있는 형태의 편집창 열기
-        public void loadRoomStructureInfoWindow()
+        //선택시 불러오기
+        public override void OnDoubleClickFile(int idx)
         {
+            if (isDoubleClick(idx) == true)
+            {
+                Debug.Log("We catch double click event on " + idx.ToString());
+
+                currRoom = new RoomXmlTemplate();
+
+                currRoom.initialize();
+
+                currRoom.testDeserialize(currFileList[idx].fullFileNamePath);
+
+                Debug.Log("Read prefabName: " + currRoom.variableContainer.getParameters("PrefabName"));
+
+
+
+                
+
+            }
         }
 
+
+        //170912 추후에 구현하자
         //방끼리 연결할 수 있는 형태의 편집창 열기
         public void loadRoomConnectEditorWindow()
         {
 
         }
 
+        //170912 추후에 구현하자
         //방에서 in-situ로 background component를 배치할 수 있는 형태의 편집창 열기
         public void loadPlacementBackgroundComponentWindow()
         {
         }
-
+       
 
 
     }

@@ -8,6 +8,13 @@ namespace vrat
     {
         public float min;
         public float max;
+
+        public minMax()
+        {
+            min = 0;
+            max = 0;
+        }
+
     }
     public class SetSliderType : SetTypeTemplate
     {

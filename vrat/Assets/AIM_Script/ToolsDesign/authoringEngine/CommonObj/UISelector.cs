@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 /*
  * authoring mode에서의 각각의 editor의 UI의 끄고 켜짐을 수행하는 녀석
+ * 
+ * 얘도 일단 다시 짜자 - 170911
  * */
 
 namespace vrat
@@ -23,8 +25,6 @@ namespace vrat
         {
             //tag name 형태로 데이터 관리
 
-
-
             GameObject uiHandler = GameObject.FindGameObjectWithTag("EditorType");
             GameObject uiSelectorHandler = GameObject.FindGameObjectWithTag("EditorSelector");
 
@@ -41,9 +41,11 @@ namespace vrat
                 UIEditorSelectorList.Add(uiSelectorHandler.transform.GetChild(i).gameObject);
             }
 
+            /*
             turnOnEditorAll(true, false);
             turnOnEditorAll(false, false);
-            turnOnEditor("LoadEnvironment");
+            */
+            
         }
         public void OnClickAuthoringButton(string msg)
         {

@@ -3,77 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace vrat
 {
-    /*
-     * Asset list에서의 directory의 입력 및 visualization을 관리함
-     * */
-    public class fileStructure
-    {
-        public string fileName;
-        public string extension;
-        public string fileImgName;
-        public string fileImgExtension;
-        public string parantPath;
-        
-
-        public bool isTextureSet;
-
-
-        Texture2D myImgTexture;
-
-
-
-
-        public fileStructure(string _fileName, string _extension, string _parentPath)
-        {
-            fileName = _fileName;
-            extension = _extension;
-
-            fileImgName = "";
-            fileImgExtension = "";
-
-            parantPath = _parentPath;
-
-            myImgTexture = new Texture2D(2, 2);
-
-            isTextureSet = false;
-        }
-
-        public Texture2D getTexture()
-        {
-            return myImgTexture;
-        }
-
-        public bool setTexture()
-        {
-            string totImgPath = parantPath + fileImgName + "." + fileImgExtension;
-
-            byte[] data;
-
-            if (System.IO.File.Exists(totImgPath) == false)
-            {
-                data = System.IO.File.ReadAllBytes(parantPath + "nullImg.png");
-            }
-            else
-            {
-                data = System.IO.File.ReadAllBytes(totImgPath);
-            }
-
-            myImgTexture.LoadImage(data);
-
-            isTextureSet = true;
-
-            return true;
-        }
-
-         
-        public void addImgInfo(string _fileImgName, string _fileImgExtension)
-        {
-            fileImgName = _fileImgName;
-            fileImgExtension = _fileImgExtension;
-        }
-
-
-    }
+    
 
     public class DirectoryUIHandler : MonoBehaviour
     {

@@ -152,6 +152,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Editor\NoesisGUI\GoogleAnalyticsHelper.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisAbout.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisBuildPostprocessor.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisBuildToolKernel.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisGUIPanelEditor.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisPostProcessor.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisReview.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisSettings.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisUpdater.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisVersion.cs" />
+    <Compile Include="Assets\Editor\NoesisGUI\NoesisWelcome.cs" />
     <Compile Include="Assets\Photon Unity Networking\Demos\DemoHub\Editor\PunStartup.cs" />
     <Compile Include="Assets\Photon Unity Networking\Editor\PhotonNetwork\AccountService.cs" />
     <Compile Include="Assets\Photon Unity Networking\Editor\PhotonNetwork\CullAreaEditor.cs" />
@@ -181,10 +192,19 @@
     <Compile Include="Assets\SteamVR\Editor\SteamVR_Settings.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_SkyboxEditor.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_Update.cs" />
+    <Compile Include="Assets\UIController\Editor\AnimatorOverrideControllerExtensions.cs" />
+    <Compile Include="Assets\UIController\Editor\AnimatorOverrideControllerInspector.cs" />
+    <Compile Include="Assets\UIController\Editor\DecoratorEditor.cs" />
+    <Compile Include="Assets\UIController\Editor\UIControllerDebugger.cs" />
+    <Compile Include="Assets\UIController\Editor\UIControllerInspector.cs" />
+    <Compile Include="Assets\UIController\Editor\UIControllerSetting.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Editor\NoesisGUI\assets.txt" />
+    <None Include="Assets\Editor\NoesisGUI\version.txt" />
     <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />
     <None Include="Assets\Materials\UI-Default-No-Alpha.shader" />
+    <None Include="Assets\NoesisGUI\README.txt" />
     <None Include="Assets\Photon Unity Networking\Demos\DemoBoxes\Resources\eurof_tt.txt" />
     <None Include="Assets\Photon Unity Networking\Demos\DemoRockPaperScissors\Assets\OpenSans\Apache License.txt" />
     <None Include="Assets\Photon Unity Networking\Demos\MarcoPolo-Tutorial\marcopolo-readme.txt" />
@@ -258,6 +278,7 @@
     <None Include="Assets\SteamVR\Resources\SteamVR_SphericalProjection.shader" />
     <None Include="Assets\SteamVR\readme.txt" />
     <None Include="Assets\Textures and Sprites\SF UI\Background\LICENSE.txt" />
+    <None Include="Assets\UIController\README.txt" />
     <None Include="Assets\Ultra_Real_Fire_Effects\READ_ME_FOR_SOFT_PARTICLES (Pro Only)!!!.txt" />
     <None Include="Assets\Ultra_Real_Fire_Effects\ReadMe_Volume_1.txt" />
     <None Include="Assets\Ultra_Real_Fire_Effects\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\CameraMotionBlur.shader" />

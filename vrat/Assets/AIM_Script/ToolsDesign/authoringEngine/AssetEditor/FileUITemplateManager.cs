@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace vrat
 {
@@ -10,8 +11,8 @@ namespace vrat
     public class FileUITemplateManager : MonoBehaviour
     {
         UnityEngine.UI.Text myText;
-        UnityEngine.UI.RawImage myImage;
-
+        UnityEngine.UI.Image myImage;
+         
         private readonly float xOffset = 150;
         private readonly float yOffset = -150;
 
@@ -36,7 +37,7 @@ namespace vrat
 
         public void setComponent()
         {
-            myImage = GetComponent<UnityEngine.UI.RawImage>();
+            myImage = GetComponent<UnityEngine.UI.Image>();
             myText = transform.GetChild(0).GetComponent<UnityEngine.UI.Text>();
         }
 
@@ -112,7 +113,7 @@ namespace vrat
                 return false;
             }
 
-            myImage.texture = _texture;
+            myImage.sprite = Sprite.Create(_texture, new Rect(0, 0, _texture.width, _texture.height), new Vector2(0.5f, 0.5f));
             return true;
         }
 

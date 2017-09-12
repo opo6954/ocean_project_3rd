@@ -9,21 +9,8 @@ using UnityEngine;
  * */
 namespace vrat
 {
-    public class TimelineEditor : EditorTemplate
+    public class TimelineEditor :  WindowTemplate
     {
-
         
-
-        // Use this for initialization
-        void Start()
-        {
-            
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

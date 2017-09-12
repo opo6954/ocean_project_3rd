@@ -5,10 +5,10 @@ using System.Xml;
 
 namespace vrat
 {
-    /*
+    /* 
      * Xml serialize 및 deserialize하는 요소
      * */
-    public abstract class XmlTemplate : MonoBehaviour
+    public abstract class XmlTemplate
     {
         //XmlTemplate의 이름(사용자 혹은 저작도구에서 따로 붙이는 이름)
         string name;        

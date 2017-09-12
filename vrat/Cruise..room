@@ -1,0 +1,43 @@
+<ROOM name="Cruise">
+  <CustomizedProperty>
+    <vrat.PrimitiveXmlTemplate name="PrefabName" type="string" contents="EngineRoom" />
+    <vrat.ListOfXmlTemplate name="TeleportableList" type="ListOfXmlTemplate" idx="0">
+      <vrat.LocationXmlTemplate name="Teleportable1" type="location">
+        <Position>
+          <x>100</x>
+          <y>100</y>
+          <z>100</z>
+        </Position>
+        <Rotation>
+          <x>50</x>
+          <y>50</y>
+          <z>50</z>
+        </Rotation>
+      </vrat.LocationXmlTemplate>
+      <vrat.LocationXmlTemplate name="Teleportable2" type="location">
+        <Position>
+          <x>1</x>
+          <y>1</y>
+          <z>1</z>
+        </Position>
+        <Rotation>
+          <x>150</x>
+          <y>150</y>
+          <z>150</z>
+        </Rotation>
+      </vrat.LocationXmlTemplate>
+      <vrat.LocationXmlTemplate name="Teleportable3" type="location">
+        <Position>
+          <x>33</x>
+          <y>33</y>
+          <z>33</z>
+        </Position>
+        <Rotation>
+          <x>250</x>
+          <y>250</y>
+          <z>250</z>
+        </Rotation>
+      </vrat.LocationXmlTemplate>
+    </vrat.ListOfXmlTemplate>
+  </CustomizedProperty>
+</ROOM>
