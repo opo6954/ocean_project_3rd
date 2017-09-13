@@ -103,6 +103,7 @@
     <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\LocationXmlTemplate.cs" />
     <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\NullXmlTemplate.cs" />
     <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\PrimitiveXmlTemplate.cs" />
+    <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\VariableXmlTemplate.cs" />
     <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\XmlTemplate.cs" />
     <Compile Include="Assets\AIM_Script\ExecutableClass\Asset\AssetGroupTemplate.cs" />
     <Compile Include="Assets\AIM_Script\ExecutableClass\Asset\AssetTemplate.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Assets\AIM_Script\ToolsDesign\FileFinder.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\GUILayoutx.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\AssetEditor.cs" />
+    <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\AssetEditor_back.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\AssetFileIOHandler.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\DirectoryUIHandler.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\FileUITemplateManager.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\CommonObj\SubwindowManager.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\CommonObj\UISelector.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\CommonObj\UISelectorTemplate.cs" />
+    <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\CommonObj\ViewChanger.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\CommonObj\WindowTemplate.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\EditorTemplate.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\EnvironmentEditor\EnvironmentEditor.cs" />

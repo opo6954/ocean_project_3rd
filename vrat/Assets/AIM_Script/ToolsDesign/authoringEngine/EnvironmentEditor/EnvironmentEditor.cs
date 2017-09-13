@@ -11,34 +11,38 @@ namespace vrat
      * 4. 사실적 효고를 위한 asset이 아닌 기타 배경이 되는 요소들의 배치
      * */
     public class EnvironmentEditor : FileExplorerTemplate
-    {
+    {        
+        //최근 room xml 정보
         RoomXmlTemplate currRoom;
+
+        //environment 부모 object
+        GameObject environmentParent;
+
+        //최근 instantiate된 room object
+        GameObject currRoomObject;
+
+        //in-situ에 필요한 fps Character
+        [SerializeField]
+        ViewChanger fpsChar;
+
+        string envPrefabPath;
+        string charPrefabPath;
+        
 
         public override void initialize()
         {
 
             fileType = "room";
             fileSavePath = Application.dataPath + "/Resources/RoomFiles/";
+            envPrefabPath = "RoomFiles/prefab/";
+            charPrefabPath = "EnvironmentEditor/FPSController";
+
+            environmentParent = GameObject.FindGameObjectWithTag("environment");
+
             base.initialize();
-            //Test for serialize
+            
 
-            //Test for room file serialize
-
-            RoomXmlTemplate r1 = new RoomXmlTemplate();
-
-            r1.initialize();
-            r1.exampleSerialize();
-            r1.testSerialize("test.room");
-
-            RoomXmlTemplate r2 = new RoomXmlTemplate();
-            r2.initialize();
-
-            r2.testDeserialize("test.room");
-
-            Debug.Log("powerover");
-
-            Debug.Log(r2.variableContainer.getParameters(0));
-
+            
 
         }
 
@@ -55,12 +59,22 @@ namespace vrat
 
                 currRoom.testDeserialize(currFileList[idx].fullFileNamePath);
 
-                Debug.Log("Read prefabName: " + currRoom.variableContainer.getParameters("PrefabName"));
-
-
+                string prefabName = (currRoom.variableContainer.getParameters("PrefabName") as PrimitiveXmlTemplate).getVariable();
+                
+                currRoomObject = GameObject.Instantiate(Resources.Load(envPrefabPath + "EngineRoom"), new Vector3(), Quaternion.Euler(50, -30, 0), environmentParent.transform) as GameObject;
 
                 
 
+                fpsChar.changeView();
+
+
+                /*
+                 * 이 부분에서 원래 방끼리 연결할 수 있는 형태의 편집창을 만들고
+                 * 이후에 in-situ로 들어가야 하는데 
+                 * 
+                 * 일단은 바로 시점이 바뀌도록 하자
+                 * */
+                
             }
         }
 

@@ -17,7 +17,7 @@ namespace vrat
     {
         //xml 형식으로 serialize하기
         //모든 obj별로 override하면 됨
-
+         
 
          
 
@@ -31,8 +31,6 @@ namespace vrat
             /*
              * common asset에 대한 trigger임
              * */
-
-            initForAsset();
         }
          
         void Start()
@@ -40,63 +38,56 @@ namespace vrat
         }
 
 
-        void initForAsset()
+        //일단 임시로 각 asset별로의 example xml serialize를 제공해보자
+        public void exampleFireSerialize()
         {
+            ObjectName = "fire";
 
-            variableContainer.addParameter(new PrimitiveXmlTemplate("RoleInfo1","string"));
-            variableContainer.addParameter(new PrimitiveXmlTemplate("IsInventory","bool"));
+            variableContainer.addParameter(new PrimitiveXmlTemplate("IsGraspable","false", "bool"));
             variableContainer.addParameter(new LocationXmlTemplate("Location", "location", new Location(new Vector3(10, 20, 30), new Vector3(50, 70, 210))));
-
-
-            ListOfXmlTemplate tl = new ListOfXmlTemplate("TriggerList", "ListOfXmlTemplate",0);
-            ListOfXmlTemplate be = new ListOfXmlTemplate("BeforeEffectList", "ListofXmlTemplate",0);
-            ListOfXmlTemplate ae = new ListOfXmlTemplate("AfterEffectList", "ListofXmlTemplate",0);
-
-            variableContainer.addParameter(tl);
-            variableContainer.addParameter(be);
-            variableContainer.addParameter(ae);
+            variableContainer.addParameter(new VariableXmlTemplate("Life", "float"));//explicit된 형태의 variable임
         }
-
-
-
-        public void exampleSerialize()
+        public void exampleExtinguisherSerialize()
         {
-            ObjectName = "over";
+            ObjectName = "extinguisher";
+
+            variableContainer.addParameter(new PrimitiveXmlTemplate("IsGraspable","true","bool"));
+            variableContainer.addParameter(new LocationXmlTemplate("Location", "location", new Location(new Vector3(10, 20, 30), new Vector3(50, 70, 210))));
+            ListOfXmlTemplate holdGesture = new ListOfXmlTemplate("HoldGestureType", "ListOfXmlTemplate", 0);
+            ListOfXmlTemplate extinguishGesture = new ListOfXmlTemplate("ExtinguishGestureType", "ListOfXmlTemplate", 0);
+
+            holdGesture.addList(new PrimitiveXmlTemplate("KeyboardButtonDownZ", "z", "string"));
+            holdGesture.addList(new PrimitiveXmlTemplate("KeyboardButtonDownX", "x", "string"));
+            holdGesture.addList(new PrimitiveXmlTemplate("KeyboardButtonDownC", "c", "string"));
+
+            extinguishGesture.addList(new PrimitiveXmlTemplate("KeyboardButtonDownZ", "z", "string"));
+            extinguishGesture.addList(new PrimitiveXmlTemplate("KeyboardButtonDownX", "x", "string"));
             
-            (variableContainer.getParameters("RoleInfo1") as PrimitiveXmlTemplate).setparameter("Sailor");
-            (variableContainer.getParameters("IsInventory") as PrimitiveXmlTemplate).setparameter(false.ToString());
 
+            variableContainer.addParameter(holdGesture);
+            variableContainer.addParameter(extinguishGesture);
 
-            ListOfXmlTemplate tl = variableContainer.getParameters("TriggerList") as ListOfXmlTemplate;
-            ListOfXmlTemplate be = variableContainer.getParameters("BeforeEffectList") as ListOfXmlTemplate;
-            ListOfXmlTemplate ae = variableContainer.getParameters("AfterEffectList") as ListOfXmlTemplate;
-
-            tl.setIdx(1);
-            be.setIdx(0);
-            ae.setIdx(2);
-            
-
-            be.addList(new ClassNameXmlTemplate("myEffect1", "LockScreenEffect"));
-            be.addList(new ClassNameXmlTemplate("myEffect2", "LockScreenEffect"));
-
-            ae.addList(new ClassNameXmlTemplate("myEffect1", "LockScreenEffect"));
-            ae.addList(new ClassNameXmlTemplate("myEffect2", "LockScreenEffect"));
-            ae.addList(new ClassNameXmlTemplate("myEffect3", "LockScreenEffect"));
-
-            tl.addList(new ClassNameXmlTemplate("myTrigger1", "HoldTriggerTemplate"));
-            tl.addList(new ClassNameXmlTemplate("myTrigger2", "ApproachTriggerTemplate"));
-            tl.addList(new ClassNameXmlTemplate("myTrigger3", "ActTriggerTemplate"));
         }
+        public void examplePhoneSerialize()
+        {
+            ObjectName = "phone";
 
+            variableContainer.addParameter(new PrimitiveXmlTemplate("IsGraspable","false", "bool"));
+            variableContainer.addParameter(new LocationXmlTemplate("Location", "location", new Location(new Vector3(10, 20, 30), new Vector3(50, 70, 210))));
+            ListOfXmlTemplate reportGesture = new ListOfXmlTemplate("ReportGestureType", "ListOfXmlTemplate", 0);
+
+            
+            reportGesture.addList(new PrimitiveXmlTemplate("KeyboardButtonDownX", "x", "string"));
+            reportGesture.addList(new PrimitiveXmlTemplate("KeyboardButtonDownC", "c", "string"));
+
+            variableContainer.addParameter(reportGesture);
+
+
+        }
         
-
-
-
-        
-
 
         //일단 모든 asset에 공통된 얘들을 불러오자
-
+        /*
         protected override bool deserializeFromXml(XmlNodeList childNodeList)
         {
             XmlNode rootNode = childNodeList[0];
@@ -214,7 +205,6 @@ namespace vrat
                             string classNameInner = xnInner.Name;
                             string nameInner = xacInner["name"].InnerText;
                             string typeInner = xacInner["type"].InnerText;
-                            
 
                             XmlTemplate xmlTemplate = System.Activator.CreateInstance(System.Type.GetType(classNameInner), new object[]{nameInner, typeInner}) as XmlTemplate;
 
@@ -223,19 +213,12 @@ namespace vrat
                     }
                 }
             }
-
-            /*
-             * FOR DEBUG
-            Debug.Log(variableContainer.getNumberOfParameters());
-
-            for(int i=0; i<variableContainer.getNumberOfParameters(); i++)
-            {
-                Debug.Log(variableContainer.getParameters(i).Name);
-            }
-             * */
-
+         
             return true;
         }
+        */
+
+
         
     }
 }

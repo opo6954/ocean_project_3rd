@@ -12,6 +12,9 @@ using UnityEngine;
  * 
  * 일단 xml serializer가 필요함
  * 
+ * variable의 종류
+ * 
+ * 
  * 
  * 
  * 
@@ -216,6 +219,7 @@ namespace vrat
 
         protected virtual bool deserializeFromXml(XmlNodeList childNodeList)
         {
+            
             string type = "";
 
             XmlNode rootNode = childNodeList[0];
@@ -238,24 +242,133 @@ namespace vrat
             
             XmlNodeList propertyList = childProperty.ChildNodes;
 
-
-            string name = topNode.Attributes["name"].InnerText;
             
-            XmlNode childProperty = topNode.ChildNodes[0];
 
-            type = topNode.Name;
-
-            Debug.Log("name: " + name);
-            Debug.Log("type: " + type);
-            
+            deserializeChildEachInside(propertyList);
 
             return true;
         }
 
-        //chlid node each를 deserialize하는 데 재귀적으로 호출해야 할 듯
-        private bool deserializeChildEach(XmlNode _node)
+        private bool deserializeChildEachInside(XmlNodeList xnList)
         {
+            foreach (XmlNode xn in xnList)
+            {
+                
+                XmlAttributeCollection xac = xn.Attributes;
+
+                //기본 primitiveXmlTemplate일 시
+                if (xn.Name == "vrat.ListOfXmlTemplate")
+                {
+                    deserializeChildEachForList(xn);
+                }
+                else
+                {
+                    variableContainer.addParameter(createInstanceListElement(xn));
+                }
+            }
+
             return true;
+        }
+        //list type의 child를 위한 deserializer --> 내부적으로 child에 대해서도 돌려야 함
+        //일단 돌리기
+
+        //list of list of xmlTemplate은 생각하지 말자......... 쓰지마!!
+        private bool deserializeChildEachForList(XmlNode _node)
+        {
+            XmlAttributeCollection xac = _node.Attributes;
+
+            string name = xac["name"].InnerText;
+            string type = xac["type"].InnerText;
+            string selectedIdx = xac["idx"].InnerText;
+
+            ListOfXmlTemplate xtList = new ListOfXmlTemplate(name, type, int.Parse(selectedIdx));
+            xtList.ClassName = "ListOfXmlTemplate";
+            xtList.setIdx(int.Parse(selectedIdx));
+
+            foreach(XmlNode _childNode in _node.ChildNodes)
+            {
+                xtList.addList(createInstanceListElement(_childNode));
+            }
+
+            variableContainer.addParameter(xtList);
+
+
+            return true;
+        }
+        //list xml template의 경우 xmltemplate을 새로 instantiate해야 하는 데 이 부분에서 수행함
+        private XmlTemplate createInstanceListElement(XmlNode _node)
+        {
+            XmlAttributeCollection xac = _node.Attributes;
+
+            string name = xac["name"].InnerText;
+            string type = xac["type"].InnerText;
+
+            if (_node.Name == "vrat.PrimitiveXmlTemplate")
+            {
+
+                string contents = xac["contents"].InnerText;
+
+                PrimitiveXmlTemplate pxt = new PrimitiveXmlTemplate(name, contents, type);
+
+                return pxt;
+
+            }
+            else if (_node.Name == "vrat.LocationXmlTemplate")
+            {
+                LocationXmlTemplate lxt = new LocationXmlTemplate(name, type, loadLocationFromXmlNode(_node));
+
+
+                return lxt;
+            }
+            else if (_node.Name == "vrat.ClassNameXmlTemplate")
+            {
+                ClassNameXmlTemplate cxl = new ClassNameXmlTemplate(name, type);
+                return cxl;
+            }
+
+            else if (_node.Name == "vrat.VariableXmlTemplate")
+            {
+                VariableXmlTemplate vxt = new VariableXmlTemplate(name, type);
+                return vxt;
+            }
+
+            else
+            {
+                Debug.Log("No deserializer found for " + _node.Name);
+                return new NullXmlTemplate();
+            }
+        }
+        
+
+        //xmlNode로부터 location정보를 불러온다(position, rotation)
+        private Location loadLocationFromXmlNode(XmlNode _node)
+        {
+            Vector3 pos = new Vector3();
+            Vector3 rot = new Vector3();
+
+            foreach (XmlNode xnInner in _node.ChildNodes)
+            {
+                XmlAttributeCollection xacInner = xnInner.Attributes;
+
+                if (xnInner.Name == "Position")
+                {
+                    pos.x = float.Parse(xnInner["x"].InnerText);
+                    pos.y = float.Parse(xnInner["y"].InnerText);
+                    pos.z = float.Parse(xnInner["z"].InnerText);
+                    ;
+                }
+                if (xnInner.Name == "Rotation")
+                {
+                    rot.x = float.Parse(xnInner["x"].InnerText);
+                    rot.y = float.Parse(xnInner["y"].InnerText);
+                    rot.z = float.Parse(xnInner["z"].InnerText);
+
+                }
+            }
+
+            Location l = new Location(pos, rot);
+
+            return l;
         }
 
         /*

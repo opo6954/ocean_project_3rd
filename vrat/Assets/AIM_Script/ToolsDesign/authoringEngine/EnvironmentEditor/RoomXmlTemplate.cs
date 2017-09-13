@@ -18,54 +18,20 @@ namespace vrat
             base.initialize();
             ObjectType = OBJTYPE.ROOM;
 
-            initForRoom();
-
-           /* 
-            //Test for room file serialize
-            exampleSerialize();
-
-            testSerialize(ObjectName + "." + "room");
-
-            RoomXmlTemplate r2 = new RoomXmlTemplate();
-
-            r2.initialize();
-
-            r2.testDeserialize(ObjectName + "." + "room");
-
-            Debug.Log("powerover");
-
-            Debug.Log(r2.variableContainer.getParameters(0));
-            */
-
-
-            
-            
-
-            
-
-
-
         }
 
 
-        //room file을 위한 초기 파라미터 설정
-        void initForRoom()
-        {
-            variableContainer.addParameter(new PrimitiveXmlTemplate("PrefabName", "string"));
-            ListOfXmlTemplate teleportable = new ListOfXmlTemplate("TeleportableList", "ListOfXmlTemplate", 0);
-
-            variableContainer.addParameter(teleportable);
-
-            
-
-
-        }
 
 
         //room file 예시 serialize 함수임
         public void exampleSerialize()
         {
             ObjectName = "Cruise";
+
+            variableContainer.addParameter(new PrimitiveXmlTemplate("PrefabName", "string"));
+            ListOfXmlTemplate teleportable = new ListOfXmlTemplate("TeleportableList", "ListOfXmlTemplate", 0);
+
+            variableContainer.addParameter(teleportable);
 
             (variableContainer.getParameters("PrefabName") as PrimitiveXmlTemplate).setparameter("EngineRoom");
 

@@ -18,7 +18,7 @@ namespace vrat
             string propertyName = Name;
             string propertyType = Type;
             string propertyValue = variable.ToString();
-
+            
             XmlElement individualProperty = document.CreateElement("vrat.PrimitiveXmlTemplate");
             parentElement.AppendChild(individualProperty);
 

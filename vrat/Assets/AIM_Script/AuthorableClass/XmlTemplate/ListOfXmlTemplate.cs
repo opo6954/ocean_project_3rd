@@ -27,7 +27,7 @@ namespace vrat
             individualProperty.SetAttribute("idx", selectedIdx.ToString());
 
             parentElement.AppendChild(individualProperty);
-
+            
             foreach(XmlTemplate q in xmlTemplateList)
             {
                 q.XmlSerialize(document, individualProperty);
@@ -45,6 +45,7 @@ namespace vrat
         {
             selectedIdx = _idx;
         }
+
 
         public bool addList(XmlTemplate _xt)
         {
@@ -67,6 +68,16 @@ namespace vrat
             }
 
             return nameList;
+        }
+
+        public XmlTemplate getXmlTemplate(int idx)
+        {
+            if(xmlTemplateList.Count > idx)
+            {
+                return xmlTemplateList[idx];
+            }
+
+            return new NullXmlTemplate();
         }
 
         public XmlTemplate getXmlTemplate(string name)

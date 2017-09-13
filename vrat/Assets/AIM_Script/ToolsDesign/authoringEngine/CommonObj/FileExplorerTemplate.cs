@@ -117,9 +117,7 @@ namespace vrat
         //asset structure가 위치하는 곳(scroll view에서의 contents를 이 곳으로 설정하면 됨
         [SerializeField]
         GameObject fileTemplatePosition;
-
-        public CURREDITORTYPE currEditorType;
-
+        
         protected readonly string fileUITemplatePrefabPath = "AssetListWindow/fileUITemplate";
 
         protected Object fileUITemplatePrefab;

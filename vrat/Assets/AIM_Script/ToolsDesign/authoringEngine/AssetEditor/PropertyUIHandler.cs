@@ -18,7 +18,7 @@ namespace vrat
         GameObject propertyTemplatePosition;
 
         [SerializeField]
-        AssetEditor assetEditor;
+        AssetEditor_back assetEditor;
 
         //SaveAs의 파일명을 위한 게임 오브젝트
         [SerializeField]

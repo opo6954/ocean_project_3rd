@@ -32,9 +32,19 @@ namespace vrat
      * */
 
     
-
+         
     public class AssetListWindowHandler : FileExplorerTemplate
     {
+        //모든 editor main function을 serializeField로 가지고 있어야 함
+        [SerializeField]
+        AssetEditor assetEditor;
+
+        [SerializeField]
+        EnvironmentEditor environmentEditor;
+
+        [SerializeField]
+        TimelineEditor timelineEditor;
+
         //최근에 선택된 Asset의 정보
         protected AuthorableAsset currAsset;
         
@@ -52,7 +62,30 @@ namespace vrat
         public OnDragNDropForEditor callbackforDNDinEnvironmentEditor;
         public OnDragNDropForEditor callbackforDNDinAssetEditor;
         public OnDragNDropForEditor callbackforDNDinTimelineEditor;
-        
+
+        CURREDITORTYPE currFloatingEditorWindow;
+
+        public void setCurrEditorWindow(string _type)
+        {
+            CURREDITORTYPE _cet;
+
+            _cet = CURREDITORTYPE.ENVIRONMENT_EDITOR;
+
+            if (_type.Contains("Environment") == true)
+            {
+                _cet = CURREDITORTYPE.ENVIRONMENT_EDITOR;
+            }
+            else if (_type.Contains("Asset") == true)
+            {
+                _cet = CURREDITORTYPE.ASSET_EDITOR;
+            }
+            else if (_type.Contains("Timeline") == true)
+            {
+                _cet = CURREDITORTYPE.TIMELINE_EDITOR;
+            }
+
+            currFloatingEditorWindow = _cet;
+        }
 
         //callback 함수를 설정하는 함수
         public void setDCCallback(bool isDoubleClick, CURREDITORTYPE editorIdx, OnDoubleClickForEditor _callback)
@@ -92,7 +125,7 @@ namespace vrat
                 currAsset.testDeserialize(currFileList[idx].fullFileNamePath);
 
                 //최근 열린 editortype에 따라서 다른 callback 함수를 부르기
-                switch (currEditorType)
+                switch (currFloatingEditorWindow)
                 {
                     case CURREDITORTYPE.ENVIRONMENT_EDITOR:
                         callbackForDCinEnvironmentEditor(currAsset);
@@ -111,8 +144,9 @@ namespace vrat
 
         void tmpForSetCallback()
         {
+            
+            //setDCCallback(true, CURREDITORTYPE.ASSET_EDITOR, delegate (AuthorableAsset _aa) { Debug.Log("For double click, On Asset Editor callback"); });
             setDCCallback(true, CURREDITORTYPE.ENVIRONMENT_EDITOR, delegate (AuthorableAsset _aa) { Debug.Log("For double click, On Environment Editor callback"); });
-            setDCCallback(true, CURREDITORTYPE.ASSET_EDITOR, delegate (AuthorableAsset _aa) { Debug.Log("For double click, On Asset Editor callback"); });
             setDCCallback(true, CURREDITORTYPE.TIMELINE_EDITOR, delegate (AuthorableAsset _aa) { Debug.Log("For double click, On Timeline Editor callback"); });
         }
 
@@ -124,7 +158,12 @@ namespace vrat
             //asset의 저장 경로를 불러오기(datapath 기반)
             fileSavePath = Application.dataPath + "/Resources/AssetFiles/";
 
+            //임시로 다른 environment editor, timeilne editor의 callback 함수를 설정하기
             tmpForSetCallback();
+
+            //asset editor로 건네줄 callback 함수 설정
+            setDCCallback(true, CURREDITORTYPE.ASSET_EDITOR, assetEditor.OnSelectAsset);
+
             base.initialize();
 
             

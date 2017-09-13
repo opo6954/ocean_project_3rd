@@ -11,7 +11,7 @@ namespace vrat
         [SerializeField]
         GameObject fileTemplatePosition;
         [SerializeField]
-        public AssetEditor assetEditor;
+        public AssetEditor_back assetEditor;
 
         //AutorableAsset 변수, 이 곳에 저작 관련 정보를 저장하고 주고 받음
         protected AuthorableAsset currAsset;

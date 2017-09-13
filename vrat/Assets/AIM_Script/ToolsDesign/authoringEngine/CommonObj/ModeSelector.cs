@@ -15,6 +15,11 @@ namespace vrat
         EditorWindowSelector editorWindowSelector;
 
 
+        //현재 무슨 window가 띄워져 있는 지 알려줘야 asset list window에서 더블클릭 등의 process를 수행
+        [SerializeField]
+        AssetListWindowHandler assetListWindowHandler;
+
+
         //특정 editorMode에 들어갈 경우의 callback임/ editor 들어가는 버튼에 callback함수로써 이 함수가 설정됨 with 파라미터
 
         public override void initialize()
@@ -33,8 +38,7 @@ namespace vrat
 
             //만족하는 editorWindow 켜기
             editorWindowSelector.OnEnterCertainEditor(_type);
-
-
+            assetListWindowHandler.setCurrEditorWindow(_type);
 
             //editorSelector의 특정 editor 켜기
             for (int i = 0; i < childList.Count; i++)
