@@ -32,6 +32,14 @@ namespace vrat
     {
         private List<XmlTemplate> variableList = new List<XmlTemplate>();
 
+        public void copyValueOnly(VariableContainer _target)
+        {
+            foreach (XmlTemplate xt in _target.variableList)
+            {
+                variableList.Add(xt);
+            }
+        }
+
         public int getVariableCount()
         {
             return variableList.Count;
@@ -204,6 +212,15 @@ namespace vrat
 
         }
 
+        public void copyValueOnly(ObjectTemplate _target)
+        {
+            ObjectName = _target.ObjectName;
+            ObjectType = _target.ObjectType;
+            variableContainer.copyValueOnly(_target.variableContainer);
+            
+            
+          
+        }
 
 
         protected virtual bool serialize2Xml(XmlDocument document)
@@ -213,10 +230,7 @@ namespace vrat
 
             return true;
         }
-        //xml 파일을 읽어서 
-        //일단 deserialize은 좀 있다가 하고 serailize to Xml을 먼저 하자
-        //170912 Deserialize 다시 짜기
-
+        
         protected virtual bool deserializeFromXml(XmlNodeList childNodeList)
         {
             
@@ -232,6 +246,8 @@ namespace vrat
             XmlAttributeCollection xac1 = rootNode.Attributes;
 
             ObjectName = rootNode.Attributes[0].InnerText;
+
+            
 
             XmlNode childProperty = rootNode.ChildNodes[0];
 

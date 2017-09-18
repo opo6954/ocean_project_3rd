@@ -30,7 +30,7 @@ namespace vrat
      * 
      * 
      * */
-
+      
     
          
     public class AssetListWindowHandler : FileExplorerTemplate
@@ -39,19 +39,22 @@ namespace vrat
         [SerializeField]
         AssetEditor assetEditor;
 
+        
         [SerializeField]
         EnvironmentEditor environmentEditor;
 
         [SerializeField]
         TimelineEditor timelineEditor;
-
+        
         //최근에 선택된 Asset의 정보
         protected AuthorableAsset currAsset;
-        
-        
 
+
+        //모든 asset의 정보 list
+        protected List<AuthorableAsset> authorableAssetList = new List<AuthorableAsset>();
+        
         //asset을 double click했을 때 각 editor로 가는 callback 함수
-        public delegate void OnDoubleClickForEditor(AuthorableAsset aa);
+        public delegate void OnDoubleClickForEditor(string filename, AuthorableAsset aa, Texture2D prevImg);
         public OnDoubleClickForEditor callbackForDCinEnvironmentEditor;
         public OnDoubleClickForEditor callbackForDCinAssetEditor;
         public OnDoubleClickForEditor callbackForDCinTimelineEditor;
@@ -119,24 +122,22 @@ namespace vrat
 
                 //선택된 asset idx를 바탕으로 asset을 testDeserialize하기
 
-                currAsset = new AuthorableAsset();
-                currAsset.initialize();
-
-                currAsset.testDeserialize(currFileList[idx].fullFileNamePath);
+                
+                currAsset = authorableAssetList[idx];
 
                 //최근 열린 editortype에 따라서 다른 callback 함수를 부르기
                 switch (currFloatingEditorWindow)
                 {
                     case CURREDITORTYPE.ENVIRONMENT_EDITOR:
-                        callbackForDCinEnvironmentEditor(currAsset);
+                        callbackForDCinEnvironmentEditor(currFileList[idx].fullFileNamePath, currAsset, currFileList[idx].getTexture());
                         break;
 
                     case CURREDITORTYPE.ASSET_EDITOR:
-                        callbackForDCinAssetEditor(currAsset);
+                        callbackForDCinAssetEditor(currFileList[idx].fullFileNamePath, currAsset, currFileList[idx].getTexture());
                         break;
 
                     case CURREDITORTYPE.TIMELINE_EDITOR:
-                        callbackForDCinTimelineEditor(currAsset);
+                        callbackForDCinTimelineEditor(currFileList[idx].fullFileNamePath, currAsset, currFileList[idx].getTexture());
                         break;
                 }
             }
@@ -146,8 +147,8 @@ namespace vrat
         {
             
             //setDCCallback(true, CURREDITORTYPE.ASSET_EDITOR, delegate (AuthorableAsset _aa) { Debug.Log("For double click, On Asset Editor callback"); });
-            setDCCallback(true, CURREDITORTYPE.ENVIRONMENT_EDITOR, delegate (AuthorableAsset _aa) { Debug.Log("For double click, On Environment Editor callback"); });
-            setDCCallback(true, CURREDITORTYPE.TIMELINE_EDITOR, delegate (AuthorableAsset _aa) { Debug.Log("For double click, On Timeline Editor callback"); });
+            setDCCallback(true, CURREDITORTYPE.ENVIRONMENT_EDITOR, delegate (string filename, AuthorableAsset _aa, Texture2D _prevImg) { Debug.Log("For double click, On Environment Editor callback"); });
+            setDCCallback(true, CURREDITORTYPE.TIMELINE_EDITOR, delegate (string filename, AuthorableAsset _aa, Texture2D _prevImg) { Debug.Log("For double click, On Timeline Editor callback"); });
         }
 
         public override void initialize()
@@ -163,10 +164,51 @@ namespace vrat
 
             //asset editor로 건네줄 callback 함수 설정
             setDCCallback(true, CURREDITORTYPE.ASSET_EDITOR, assetEditor.OnSelectAsset);
-
             base.initialize();
 
-            
+            //이 부분에서 모든 asset을 불러서 list에 집어넣기
+
+            if (authorableAssetList != null)
+                authorableAssetList.Clear();
+
+            foreach(fileStructure fs in currFileList)
+            {
+                AuthorableAsset _aa = new AuthorableAsset();
+                _aa.initialize();
+                _aa.testDeserialize(fs.fullFileNamePath);
+
+                authorableAssetList.Add(_aa);
+
+            }
+
         }
+
+        public List<AuthorableAsset> getAssetList()
+        {
+            return authorableAssetList;
+        }
+
+        
+
+
+        /*
+         * 
+         * insitu를 위한 object의 instantiate하는 부분
+         * public void callbackFromDirhandlerAllAsset(string[] _assetFullNameList, AuthorableAsset[] _assetList)
+        {
+            assetFullNameList = _assetFullNameList;
+            assetList = _assetList;
+
+            currLocatedAsset = new GameObject[assetList.Length];
+
+            //이 부분에서 모든 asset을 맵에 배치해야 한다.
+            for(int i=0; i<assetList.Length; i++)
+            {
+                AuthorableAsset aa = assetList[i];
+                Location l = (aa.variableContainer.getParameters("Location") as LocationXmlTemplate).getVariable();
+                currLocatedAsset[i] = GameObject.Instantiate(Resources.Load(prefabPath + aa.ObjectName), l.position, Quaternion.Euler(l.rotation), environment.transform) as GameObject;
+            }
+        }
+        */
     }
 }

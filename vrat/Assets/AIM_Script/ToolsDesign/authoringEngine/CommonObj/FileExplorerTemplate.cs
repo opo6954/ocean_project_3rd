@@ -27,10 +27,6 @@ namespace vrat
         Texture2D myImgTexture;
 
 
-
-
-
-
         public fileStructure(string _fileName, string _extension, string _parentPath)
         {
             fileName = _fileName;
@@ -106,7 +102,7 @@ namespace vrat
             fileImgExtension = _fileImgExtension;
         }
     }
-
+     
     /*
      * file explorer window의 template임
      * 주로 assetListWindow, Environment Editor에서의 roomListWindow에서 쓰임
@@ -184,7 +180,7 @@ namespace vrat
 
             //assetSavePath에 있는 모든 파일 list를 가져오기
             string[] p = System.IO.Directory.GetFiles(fileSavePath);
-
+            
             //.asset file만 추출
             for (int i = 0; i < p.Length; i++)
             {
@@ -198,6 +194,7 @@ namespace vrat
                     continue;
 
                 currFileList.Add(new fileStructure(fileName, extension, fileSavePath));
+                
             }
 
             //.asset file 중에서 image가 있는 얘들 추출하기(jpg, png만 넣었음)
@@ -277,7 +274,6 @@ namespace vrat
 
         // Use this for initialization
         void Start() {
-            
             initialize();
         }
 

@@ -31,7 +31,7 @@ namespace vrat
 
         public VariableXmlTemplate(string _name, string _type) : base(_name, _type)
         {
-            
+            ClassName = "VariableXmlTemplate";
         }
     }
 }

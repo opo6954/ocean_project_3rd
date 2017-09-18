@@ -17,9 +17,9 @@ namespace vrat
     {
         //xml 형식으로 serialize하기
         //모든 obj별로 override하면 됨
-         
 
-         
+
+        
 
 
         public override void initialize()

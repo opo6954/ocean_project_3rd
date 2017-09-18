@@ -136,6 +136,7 @@
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\SetBoolType.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\SetDropDownType.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\SetInputType.cs" />
+    <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\SetLabelType.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\SetLocationType.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\SetSliderType.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\SetTypeTemplate.cs" />
@@ -153,7 +154,6 @@
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\EnvironmentEditor\EnvironmentEditor.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\EnvironmentEditor\EnvironmentXmlTemplate.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\EnvironmentEditor\RoomXmlTemplate.cs" />
-    <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\InsituEditor\DirectoryUIHandler_Insitu.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\InsituEditor\InsituEditor.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\InsituEditor\LocateAssetWithRay.cs" />
     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\InstructionEditor\InstructionEditor.cs" />

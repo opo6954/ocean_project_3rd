@@ -4,9 +4,19 @@ using UnityEngine;
 
 namespace vrat
 {
+    //asset property type별로 각기 다른 종류임
+    /*
+     * dropdown: 여러 개중에서 선택(주로 list form에서 수행)
+     * textinput: 글자 입력
+     * toggle: boolean값
+     * locationfield: location 특수(position, rotation)
+     * slider: slider 바 형식이 필요할 경우(값같은거?)
+     * label: 수정할 수 없는 걍 정보 전달을 위한 값
+     * */
+    
     public enum VISUALIZEPROPTYPE
     {
-        DROPDOWN=0, TEXTINPUT, TOGGLE, LOCATIONFIELD, SLIDER
+        DROPDOWN=0, TEXTINPUT, TOGGLE, LOCATIONFIELD, SLIDER, LABEL
     }
 
 
@@ -23,16 +33,43 @@ namespace vrat
 
         private readonly float yOffset = -50;
         private readonly float xOffset = 10;
-
+         
         public void positioningUI(int idx)
         {
             Vector3 position = new Vector3();
             position.x = xOffset;
             position.y = position.y + yOffset * idx;
+            
+
             GetComponent<RectTransform>().localPosition = position;
         }
 
-        public void visualizeProperty(PrimitiveXmlTemplate pxt, int idx)
+        //property의 type별로 다른 visualizer가 수행됨
+        public void visualizePropertyAll(XmlTemplate xt, int i)
+        {
+            if (xt.ClassName == "PrimitiveXmlTemplate")
+            {
+                var q = xt as PrimitiveXmlTemplate;
+                visualizeProperty(q, i);
+            }
+            else if (xt.ClassName == "LocationXmlTemplate")
+            {
+                var q = xt as LocationXmlTemplate;
+                visualizeProperty(q, i);
+            }
+            else if(xt.ClassName == "ListOfXmlTemplate")
+            {
+                var q = xt as ListOfXmlTemplate;
+                visualizeProperty(q, i);
+            }
+            else if(xt.ClassName == "VariableXmlTemplate")
+            {
+                var q = xt as VariableXmlTemplate;
+                visualizeProperty(q, i);
+            }
+        }
+
+        void visualizeProperty(PrimitiveXmlTemplate pxt, int idx)
         {
             string propName = pxt.Name;
             string propType = pxt.Type;
@@ -54,7 +91,7 @@ namespace vrat
                 sbt.setValue(bool.Parse(pxt.getVariable()));
                 sbt.setCallback(pxt.setparameter);
             }
-                //다른 변수는 걍 inputField 쓰기
+                //다른 변수는 걍 inputField 쓰기 or 나중에 숫자일 경우 slider 형식도 고려하자
             else
             {
                 vp = VISUALIZEPROPTYPE.TEXTINPUT;
@@ -68,11 +105,10 @@ namespace vrat
             }
 
             positioningUI(idx);
-
             turnOffOther(templateIdx);
         }
 
-        public void visualizeProperty(LocationXmlTemplate lxt, int idx)
+        void visualizeProperty(LocationXmlTemplate lxt, int idx)
         {
             string propName = lxt.Name;
             string propType = lxt.Type;
@@ -97,7 +133,7 @@ namespace vrat
             turnOffOther(templateIdx);
         }
 
-        public void visualizeProperty(ListOfXmlTemplate pxt, int idx)
+        void visualizeProperty(ListOfXmlTemplate pxt, int idx)
         {
             string propName = pxt.Name;
             string propType = pxt.Type;
@@ -120,6 +156,31 @@ namespace vrat
 
             positioningUI(idx);
 
+            turnOffOther(templateIdx);
+        }
+
+        //variable parameter를 위한 visualier
+        //variable의 경우 
+        void visualizeProperty(VariableXmlTemplate vxt, int idx)
+        {
+            string propName = vxt.Name;
+            string propType = vxt.Type;
+
+            int templateIdx;
+
+            propertyName.text = "Explicit Variable";
+            
+            vp = VISUALIZEPROPTYPE.LABEL;
+
+            templateIdx = (int)vp;
+
+            currForm = propertyValueTemplate.transform.GetChild(templateIdx).gameObject;
+
+            SetLabelType slt = currForm.GetComponent<SetLabelType>();
+
+            slt.setValue(propName);
+
+            positioningUI(idx);
             turnOffOther(templateIdx);
         }
 

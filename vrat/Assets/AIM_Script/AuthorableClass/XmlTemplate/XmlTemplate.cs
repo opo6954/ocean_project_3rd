@@ -18,7 +18,7 @@ namespace vrat
         string type;
 
         string className;
-         
+          
         protected bool isVariableSet;
 
         public string Name

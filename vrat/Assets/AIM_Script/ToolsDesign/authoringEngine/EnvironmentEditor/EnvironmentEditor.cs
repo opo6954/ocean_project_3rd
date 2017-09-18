@@ -27,7 +27,7 @@ namespace vrat
 
         string envPrefabPath;
         string charPrefabPath;
-        
+         
 
         public override void initialize()
         {
@@ -62,9 +62,9 @@ namespace vrat
                 string prefabName = (currRoom.variableContainer.getParameters("PrefabName") as PrimitiveXmlTemplate).getVariable();
                 
                 currRoomObject = GameObject.Instantiate(Resources.Load(envPrefabPath + "EngineRoom"), new Vector3(), Quaternion.Euler(50, -30, 0), environmentParent.transform) as GameObject;
-
+                currRoomObject.transform.localPosition = new Vector3();
+                currRoomObject.transform.localRotation = Quaternion.Euler(50, -30, 0);
                 
-
                 fpsChar.changeView();
 
 

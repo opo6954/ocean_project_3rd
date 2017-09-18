@@ -11,6 +11,8 @@ namespace vrat
     public class PrimitiveXmlTemplate : XmlTemplate
     {
         string variable;
+
+        
         
 
         public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement)
@@ -40,15 +42,16 @@ namespace vrat
             variable = _variable;
 
         }
-
+         
         public PrimitiveXmlTemplate(string _name, string _type) : base(_name, _type)
         {
-            
+            ClassName = "PrimitiveXmlTemplate";
         }
 
         public PrimitiveXmlTemplate(string _name, string _variable, string _type) : base(_name, _type)
         {
             variable = _variable;
+            ClassName = "PrimitiveXmlTemplate";
         }
 
     }

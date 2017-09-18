@@ -110,22 +110,7 @@ namespace vrat
                 GameObject go = (GameObject)GameObject.Instantiate(Resources.Load(propertyUITemplate), new Vector3(), new Quaternion(), propertyTemplatePosition.transform);
                 go.name = xt.Name;
 
-                if (xt.ClassName == "PrimitiveXmlTemplate")
-                {
-                    var q = xt as PrimitiveXmlTemplate;
-                    go.GetComponent<PropertyVisualizeHandler>().visualizeProperty(q,i);
-                }
-                    //location xml template일 경우 in-situ를 위한 버튼을 놓자
-                else if(xt.ClassName == "LocationXmlTemplate")
-                {
-                    var q = xt as LocationXmlTemplate;
-                    go.GetComponent<PropertyVisualizeHandler>().visualizeProperty(q,i);
-                }
-                else if (xt.ClassName == "ListOfXmlTemplate")
-                {
-                    var q = xt as ListOfXmlTemplate;
-                    go.GetComponent<PropertyVisualizeHandler>().visualizeProperty(q,i);
-                }
+                go.GetComponent<PropertyVisualizeHandler>().visualizePropertyAll(xt, i);
             }
         }
 

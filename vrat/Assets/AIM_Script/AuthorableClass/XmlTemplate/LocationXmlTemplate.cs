@@ -49,6 +49,7 @@ namespace vrat
         public LocationXmlTemplate(string _name, string _type, Location _variable) : base(_name, _type)
         {
             location = new Location(_variable.position, _variable.rotation);
+            ClassName = "LocationXmlTemplate";
         }
 
         public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement)
@@ -113,31 +114,3 @@ namespace vrat
 
     }
 }
-
-/*
- *  T variable;
-
-        public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement)
-        {
-            XmlElement individualProperty = document.CreateElement(Name);
-            parentElement.AppendChild(individualProperty);
-
-            string propertyName = Name;
-            string propertyValue = variable.ToString();
-
-            individualProperty.SetAttribute("contents", propertyValue);
-
-            return individualProperty;
-        }
-
-        public PrimitiveXmlTemplate(string _name, T _variable) : base(_name)
-        {
-            variable = _variable;
-        }
-
-        //일단 추후에 구현하자
-        public override void XmlDeserialize()
-        {
-            
-        }
-*/

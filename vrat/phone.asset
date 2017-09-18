@@ -4,8 +4,8 @@
     <vrat.LocationXmlTemplate name="Location" type="location">
       <Position>
         <x>10</x>
-        <y>20</y>
-        <z>30</z>
+        <y>22</y>
+        <z>39</z>
       </Position>
       <Rotation>
         <x>50</x>

@@ -39,6 +39,8 @@ namespace vrat
         public ListOfXmlTemplate(string _name, string _type, int _idx) : base(_name, _type)
         {
             selectedIdx = _idx;
+            ClassName = "ListOfXmlTemplate";
+
         }
 
         public void setIdx(int _idx)
