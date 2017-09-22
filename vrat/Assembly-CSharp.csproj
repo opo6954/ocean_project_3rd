@@ -117,6 +117,7 @@
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\ChooseTypeManager.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\Connection.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\ConnectionPoint.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\DragMeTimeline.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\DropMeOnEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\EventListEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\Node.cs" />

@@ -8,5 +8,10 @@ namespace vrat
 
         public VISUALIZEPROPTYPE vp;
 
+        public virtual string getValue()
+        {
+            return "";
+        } 
+
     }
 }

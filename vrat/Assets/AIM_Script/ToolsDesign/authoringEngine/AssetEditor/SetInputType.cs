@@ -19,6 +19,11 @@ namespace vrat
             vp = VISUALIZEPROPTYPE.TEXTINPUT;
         }
 
+        public override string getValue()
+        {
+            return input.text;
+        }
+
         public void setValue(string t)
         {
             input.text = t;

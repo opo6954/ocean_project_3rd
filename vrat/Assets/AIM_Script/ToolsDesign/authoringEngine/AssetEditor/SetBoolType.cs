@@ -21,11 +21,16 @@ namespace vrat
             toggle.isOn = t;
         }
 
+        public override string getValue()
+        {
+            return toggle.isOn.ToString();
+        }
+
         public void setCallback(OnValueChangedCallback _callback)
         {
             callback = _callback;
 
             toggle.onValueChanged.AddListener(delegate { callback(toggle.isOn.ToString());}); 
-        }
+        } 
     }
 }

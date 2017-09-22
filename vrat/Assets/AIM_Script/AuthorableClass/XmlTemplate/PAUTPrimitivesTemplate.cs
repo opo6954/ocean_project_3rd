@@ -201,7 +201,16 @@ namespace vrat
                 dest.variableType.Add(pc);
             }
         }
-        
+
+        public int getNumberOfParameter()
+        {
+            return paramValue.Count;
+        }
+
+        public int getNumberOfVariable()
+        {
+            return variableType.Count;
+        }
 
          
         //모든 파라미터 이름만 가져오기
@@ -215,6 +224,19 @@ namespace vrat
 
             return parametersName;
         }
+
+
+        public ParameterConversion getParameterValue(int idx)
+        {
+            return paramValue[idx];
+        }
+
+        public ParameterConversion getVariableValue(int idx)
+        {
+            return variableType[idx];
+        }
+
+
 
         //파라미터 이름이 주어질 시 parameter 값 가져오기
         public string getParameterValue(string _paramName, ref string _type)

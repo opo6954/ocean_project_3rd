@@ -18,6 +18,11 @@ namespace vrat
             vp = VISUALIZEPROPTYPE.LABEL;
         }
 
+        public override string getValue()
+        {
+            return "";
+        }
+
         public void setValue(string t)
         {
             label.text = t;

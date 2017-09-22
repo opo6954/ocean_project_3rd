@@ -1,24 +1,24 @@
 <ASSET name="extinguisher">
   <CustomizedProperty>
-    <vrat.PrimitiveXmlTemplate name="IsGraspable" type="bool" contents="True" />
+    <vrat.PrimitiveXmlTemplate name="IsGraspable" type="bool" contents="False" />
     <vrat.LocationXmlTemplate name="Location" type="location">
       <Position>
-        <x>26.60571</x>
-        <y>-4.119492</y>
-        <z>-1.425456</z>
+        <x>-7.0401</x>
+        <y>-3.350006</y>
+        <z>5.379757</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>120.9</y>
+        <y>332.9001</y>
         <z>0</z>
       </Rotation>
     </vrat.LocationXmlTemplate>
-    <vrat.ListOfXmlTemplate name="HoldGestureType" type="ListOfXmlTemplate" idx="0">
+    <vrat.ListOfXmlTemplate name="HoldGestureType" type="ListOfXmlTemplate" idx="1">
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownZ" type="string" contents="z" />
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownX" type="string" contents="x" />
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownC" type="string" contents="c" />
     </vrat.ListOfXmlTemplate>
-    <vrat.ListOfXmlTemplate name="ExtinguishGestureType" type="ListOfXmlTemplate" idx="0">
+    <vrat.ListOfXmlTemplate name="ExtinguishGestureType" type="ListOfXmlTemplate" idx="1">
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownZ" type="string" contents="z" />
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownX" type="string" contents="x" />
     </vrat.ListOfXmlTemplate>

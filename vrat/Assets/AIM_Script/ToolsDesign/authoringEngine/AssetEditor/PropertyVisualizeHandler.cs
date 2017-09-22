@@ -6,6 +6,7 @@ namespace vrat
 {
     //asset property type별로 각기 다른 종류임
     /*
+     * 이거에 맞게 해야 할 듯
      * dropdown: 여러 개중에서 선택(주로 list form에서 수행)
      * textinput: 글자 입력
      * toggle: boolean값
@@ -18,7 +19,7 @@ namespace vrat
     {
         DROPDOWN=0, TEXTINPUT, TOGGLE, LOCATIONFIELD, SLIDER, LABEL
     }
-
+     
 
     public class PropertyVisualizeHandler : MonoBehaviour
     {
@@ -28,12 +29,41 @@ namespace vrat
         [SerializeField]
         GameObject propertyValueTemplate;
 
+        [SerializeField]
+        bool isOnAssetEditor;
+
+        SetTypeTemplate typeTemplate;
+
         VISUALIZEPROPTYPE vp;
         GameObject currForm;
 
-        private readonly float yOffset = -50;
-        private readonly float xOffset = 10;
-         
+
+
+        private float yOffset = -50;
+        private float xOffset = 10;
+
+        void Start()
+        {
+            //asset editor에 있는 녀석일 경우
+            if (isOnAssetEditor == true)
+            {
+                xOffset = 10;
+                yOffset = -50;
+            }
+                //primitives editor에 있는 녀석일 경우
+            else
+            {
+                xOffset = 10;
+                yOffset = -30;
+            }
+        }
+
+        public string getValueNParamName(ref string paramName)
+        {
+            paramName = propertyName.text;
+            return typeTemplate.getValue();
+        }
+        
         public void positioningUI(int idx)
         {
             Vector3 position = new Vector3();
@@ -43,6 +73,79 @@ namespace vrat
 
             GetComponent<RectTransform>().localPosition = position;
         }
+
+        //raw한 level에서 수행
+        //parameter 이름과 parameter 타입, 추가 정보를 설정할 수 있음
+        public void visualizePropertyRaw(string paramName, VISUALIZEPROPTYPE vp, string paramValue, string[] _additionalInfo, int idx)
+        {
+            string propName = paramName;
+
+            propertyName.text = propName;
+
+            int templateIdx = (int)vp;
+
+            
+
+            currForm = propertyValueTemplate.transform.GetChild(templateIdx).gameObject;
+
+            Debug.Log("Prop. Type: " + vp.ToString());
+            Debug.Log(templateIdx);
+
+            if (vp == VISUALIZEPROPTYPE.DROPDOWN)
+            {
+                if (_additionalInfo == null)
+                {
+                    Debug.Log("No additional info found...");
+                    return;
+                }
+
+                if (_additionalInfo.Length <= 0)
+                {
+                    Debug.Log("No enough addional info found....");
+                    return;
+                }
+
+
+                SetDropDownType sddt = currForm.GetComponent<SetDropDownType>();
+
+                typeTemplate = sddt;
+
+                List<string> additionalInfo = new List<string>();
+                for (int i = 0; i < _additionalInfo.Length; i++)
+                {
+                    additionalInfo.Add(_additionalInfo[i]);
+                }
+
+                sddt.setValue(additionalInfo, int.Parse(paramValue));
+
+            }
+            else if (vp == VISUALIZEPROPTYPE.TOGGLE)
+            {
+                SetBoolType sbt = currForm.GetComponent<SetBoolType>();
+                typeTemplate = sbt;
+                sbt.setValue(bool.Parse(paramValue));                
+            }
+            else if (vp == VISUALIZEPROPTYPE.LABEL)
+            {
+
+            }
+            else if (vp == VISUALIZEPROPTYPE.LOCATIONFIELD)
+            {
+                Debug.Log("No implemente...");
+            }
+            else if(vp == VISUALIZEPROPTYPE.TEXTINPUT)
+            {
+                SetInputType sit = currForm.GetComponent<SetInputType>();
+                typeTemplate = sit;
+                sit.setValue(paramValue);
+            }
+
+
+            positioningUI(idx);
+            turnOffOther(templateIdx);
+        }
+
+        
 
         //property의 type별로 다른 visualizer가 수행됨
         public void visualizePropertyAll(XmlTemplate xt, int i)
@@ -69,6 +172,7 @@ namespace vrat
             }
         }
 
+
         void visualizeProperty(PrimitiveXmlTemplate pxt, int idx)
         {
             string propName = pxt.Name;
@@ -87,6 +191,7 @@ namespace vrat
                 currForm = propertyValueTemplate.transform.GetChild(templateIdx).gameObject;
 
                 SetBoolType sbt = currForm.GetComponent<SetBoolType>();
+                typeTemplate = sbt;
 
                 sbt.setValue(bool.Parse(pxt.getVariable()));
                 sbt.setCallback(pxt.setparameter);
@@ -99,6 +204,7 @@ namespace vrat
                 currForm = propertyValueTemplate.transform.GetChild(templateIdx).gameObject;
 
                 SetInputType sit = currForm.GetComponent<SetInputType>();
+                typeTemplate = sit;
 
                 sit.setValue(pxt.getVariable());
                 sit.setCallback(pxt.setparameter);
@@ -124,6 +230,7 @@ namespace vrat
             currForm = propertyValueTemplate.transform.GetChild(templateIdx).gameObject;
 
             SetLocationType slt = currForm.GetComponent<SetLocationType>();
+            typeTemplate = slt;
 
             slt.setValue(lxt.getVariable());
 
@@ -149,6 +256,8 @@ namespace vrat
             currForm = propertyValueTemplate.transform.GetChild(templateIdx).gameObject;
 
             SetDropDownType sddt = currForm.GetComponent<SetDropDownType>();
+
+            typeTemplate = sddt;
 
             sddt.setValue(pxt.getListofAllName(), pxt.selectedIdx);
 
@@ -178,6 +287,8 @@ namespace vrat
 
             SetLabelType slt = currForm.GetComponent<SetLabelType>();
 
+            typeTemplate = slt;
+
             slt.setValue(propName);
 
             positioningUI(idx);
@@ -190,7 +301,10 @@ namespace vrat
             for (int i = 0; i < propertyValueTemplate.transform.childCount; i++)
             {
                 if (i == idx)
+                {
+                    propertyValueTemplate.transform.GetChild(i).gameObject.SetActive(true);
                     continue;
+                }
                 propertyValueTemplate.transform.GetChild(i).gameObject.SetActive(false);
             }
         }

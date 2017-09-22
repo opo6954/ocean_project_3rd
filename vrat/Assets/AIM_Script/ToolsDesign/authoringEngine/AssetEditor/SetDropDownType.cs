@@ -24,6 +24,11 @@ namespace vrat
             vp = VISUALIZEPROPTYPE.DROPDOWN;
         }
 
+        public override string getValue()
+        {
+            return dropdown.value.ToString();
+        }
+
         public void setValue(List<string> valueArr, int selectedIdx)
         {
             dropdown.AddOptions(valueArr);

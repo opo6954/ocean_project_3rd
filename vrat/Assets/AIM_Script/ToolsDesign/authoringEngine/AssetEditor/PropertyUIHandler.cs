@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace vrat
 {
+    /*
+     * asset editor에서의 asset의 property ui를 핸들하는 핸들러임
+     * 이거 그대로 쓸 수 는 없을 듯 하오
+     * */
     public class PropertyUIHandler : MonoBehaviour
     {
         //선택된 asset 이름 설정하는 곳
@@ -100,6 +104,7 @@ namespace vrat
                 GameObject.Destroy(propertyTemplatePosition.transform.GetChild(i).gameObject);
         }
         
+        //이 부분에서 주로 수행됨
         public void visualizeAssetProperty()
         {
             clearAssetProperty();

@@ -16,7 +16,7 @@ namespace vrat
         //primitive type 결정
         [SerializeField]
         GameObject choosePrimType;
-
+         
         //내부 결정
         [SerializeField]
         GameObject chooseInnerType;
@@ -29,8 +29,17 @@ namespace vrat
         [SerializeField]
         TimelineEditor timelineEditor;
 
+        [SerializeField]
+        UnityEngine.UI.Text chooseNameText;
+
+        [SerializeField]
+        UnityEngine.UI.RawImage background;
+
         //innerType을 위한 ui prefab임
         Object innerTypeUIPrefab;
+
+        int primIdx;
+        int secondIdx;
 
         string[] triggerTypesName;
         string[] actionTypesName;
@@ -40,6 +49,10 @@ namespace vrat
         void Start()
         {
             innerTypeUIPrefab = Resources.Load("TimelineEditor/innerSetTemplate");
+
+            choosePrimType.SetActive(false);
+            chooseInnerType.SetActive(false);
+            background.enabled = false;
         }
 
         //이름하고 설명 정도?
@@ -56,26 +69,46 @@ namespace vrat
             System.Array.Copy(_actionTypesName,actionTypesName, _actionTypesName.Length);
             System.Array.Copy(_actionTypesInst,actionTypesInst, _actionTypesName.Length);
         }
+
+        public void OnEnterFirstPhase()
+        {
+            background.enabled = true;
+            //모든 choose window 끄기
+            choosePrimType.SetActive(true);
+        }
         
         //처음에 무슨 type 만들지 선택함 idx0: trigger, idx1: action idx2: instruction
         public void OnClickFirstPhase(int idx)
         {
-            switch(idx)
+            
+            primIdx = idx;
+
+            background.enabled = true;
+
+            switch(primIdx)
             {
                 case 0:
                     choosePrimType.SetActive(false);
-                    //목록에 맞게 update하기
+
+                    //목록에 맞게 update하기                    
+                    respawnList(triggerTypesName);
+                    chooseNameText.text = "Choose trigger types";
+
                     chooseInnerType.SetActive(true);
                     break;
                 case 1:
                     choosePrimType.SetActive(false);
+                    
                     //목록에 맞게 update하기
+                    respawnList(actionTypesName);
+                    chooseNameText.text = "Choose action types";
+
                     chooseInnerType.SetActive(true);
                     break;
                 case 2:
                     choosePrimType.SetActive(false);
                     chooseInnerType.SetActive(false);
-                    timelineEditor.OnChooseTypes(2, -1);
+                    timelineEditor.OnChooseTypes(primIdx, -1);
                     break;
             }
         }
@@ -83,15 +116,20 @@ namespace vrat
         public void respawnList(string[] nameList)
         {
             //respawn...
+
+
             for(int i=0; i<nameList.Length; i++)
             {
                 GameObject go = (GameObject)Instantiate(innerTypeUIPrefab,innerTypeArea.transform);
 
+                //위치하고
                 go.GetComponent<RectTransform>().anchoredPosition = new Vector2();
-                go.GetComponent<innerTypeContainer>().setIdx(i);
-            
 
-                //go.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(
+                innerTypeContainer itc = go.GetComponent<innerTypeContainer>();
+                itc.setIdx(i);
+                itc.setPositioning(i);
+                itc.setText(nameList[i]);
+                itc.setOnClickListener(OnClickSecondPhase);
             }
 
         }
@@ -99,7 +137,15 @@ namespace vrat
         //두번째에서 inner type으로 무엇을 만들지 선택함 단 instruction은 예외임
         public void OnClickSecondPhase(int idx)
         {
-            
+            background.enabled = false;
+            //모든 choose window 끄기
+            choosePrimType.SetActive(false);
+            chooseInnerType.SetActive(false);
+            //second idx 설정하고
+            secondIdx = idx;
+
+            //timelineeditor로 callback 보내기(OnChooseTypes with primIdx, secondIdx)
+            timelineEditor.OnChooseTypes(primIdx, secondIdx);
         }
 
         

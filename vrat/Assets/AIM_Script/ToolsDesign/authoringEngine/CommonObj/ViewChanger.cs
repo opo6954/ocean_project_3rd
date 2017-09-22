@@ -64,7 +64,7 @@ namespace vrat
 
         private void Start()
         {
-            changeViewKey = KeyCode.V;
+            changeViewKey = KeyCode.LeftControl;
             isFpsCurr = false;
 
             turnGlobal(true);

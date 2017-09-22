@@ -25,6 +25,11 @@ namespace vrat
             vp = VISUALIZEPROPTYPE.LOCATIONFIELD;
         }
 
+        public override string getValue()
+        {
+            return "";
+        }
+
         public void setValue(Location t)
         {
             
