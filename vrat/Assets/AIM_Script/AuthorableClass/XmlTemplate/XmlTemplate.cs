@@ -63,6 +63,6 @@ namespace vrat
             Type = _type;
         }
 
-        public abstract XmlElement XmlSerialize(XmlDocument document, XmlElement parentElement);
+        public abstract XmlElement XmlSerialize(XmlDocument document, XmlElement parentElement, bool isRoot);
     }
 }

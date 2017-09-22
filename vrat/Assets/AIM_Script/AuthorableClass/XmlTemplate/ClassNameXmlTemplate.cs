@@ -8,7 +8,7 @@ namespace vrat
     public class ClassNameXmlTemplate : XmlTemplate
     {
 
-         public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement)
+         public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement, bool isRoot)
         {
             string propertyName = Name;
             string propertyType = Type;

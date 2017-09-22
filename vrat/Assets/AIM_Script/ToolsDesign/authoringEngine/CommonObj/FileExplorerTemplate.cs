@@ -103,13 +103,13 @@ namespace vrat
         }
     }
      
-    /*
+    /* 
      * file explorer window의 template임
      * 주로 assetListWindow, Environment Editor에서의 roomListWindow에서 쓰임
      * */
     public class FileExplorerTemplate : WindowTemplate
     {
-
+         
         //asset structure가 위치하는 곳(scroll view에서의 contents를 이 곳으로 설정하면 됨
         [SerializeField]
         GameObject fileTemplatePosition;
@@ -119,7 +119,7 @@ namespace vrat
         protected Object fileUITemplatePrefab;
 
         protected static string fileSavePath;
-
+         
         protected List<fileStructure> currFileList = new List<fileStructure>();
 
         protected List<FileUITemplateManager> currFileUIList = new List<FileUITemplateManager>();
@@ -231,7 +231,6 @@ namespace vrat
 
                 FileUITemplateManager ftm = go.GetComponent<FileUITemplateManager>();
 
-                ftm.setComponent();
 
                 if (ftm.setName(currFileList[i].fileName) == false)
                     Debug.Log("No text component found...");
@@ -243,6 +242,7 @@ namespace vrat
 
                 ftm.setPosition(i);
                 ftm.setOnClickListener(OnDoubleClickFile);
+                ftm.setOnDragListener(OnDragStart);
 
                 currFileUIList.Add(ftm);
             }
@@ -259,9 +259,13 @@ namespace vrat
             //prefab 불러와보자
             if (isDoubleClick(idx) == true)
             {
-
                 Debug.Log("We catch double click event...");
             }
+        }
+
+        public virtual void OnDragStart(int idx)
+        {
+            Debug.Log("We catch drag start~!");
         }
 
         public virtual void initialize()

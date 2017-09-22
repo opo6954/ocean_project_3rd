@@ -11,7 +11,7 @@ namespace vrat
         {
         }
 
-        public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement)
+        public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement, bool isRoot)
         {
             throw new System.NotImplementedException();
         }

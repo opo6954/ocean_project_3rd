@@ -61,12 +61,13 @@ namespace vrat
 
         //asset을 drag n drop했을 때 각 editor로 가는  callback 함수
 
-        public delegate void OnDragNDropForEditor(AuthorableAsset aa);
+        public delegate void OnDragNDropForEditor(string filename, AuthorableAsset aa, Texture2D prevImg);
         public OnDragNDropForEditor callbackforDNDinEnvironmentEditor;
         public OnDragNDropForEditor callbackforDNDinAssetEditor;
         public OnDragNDropForEditor callbackforDNDinTimelineEditor;
 
         CURREDITORTYPE currFloatingEditorWindow;
+
 
         public void setCurrEditorWindow(string _type)
         {
@@ -90,23 +91,39 @@ namespace vrat
             currFloatingEditorWindow = _cet;
         }
 
+        
+
         //callback 함수를 설정하는 함수
-        public void setDCCallback(bool isDoubleClick, CURREDITORTYPE editorIdx, OnDoubleClickForEditor _callback)
+        public void setDCCallback(CURREDITORTYPE editorIdx, OnDoubleClickForEditor _callback)
         {
-            if(isDoubleClick == true)
+            
+            switch (editorIdx)
             {
-                switch (editorIdx)
-                {
-                    case CURREDITORTYPE.ENVIRONMENT_EDITOR:
-                        callbackForDCinEnvironmentEditor = _callback;
-                        break;
-                    case CURREDITORTYPE.ASSET_EDITOR:
-                        callbackForDCinAssetEditor = _callback;
-                        break;
-                    case CURREDITORTYPE.TIMELINE_EDITOR:
-                        callbackForDCinTimelineEditor = _callback;
-                        break;
-                }
+                case CURREDITORTYPE.ENVIRONMENT_EDITOR:
+                    callbackForDCinEnvironmentEditor = _callback;
+                    break;
+                case CURREDITORTYPE.ASSET_EDITOR:
+                    callbackForDCinAssetEditor = _callback;
+                    break;
+                case CURREDITORTYPE.TIMELINE_EDITOR:
+                    callbackForDCinTimelineEditor = _callback;
+                    break;
+            }
+        }
+
+        public void setDragCallback(CURREDITORTYPE editorIdx, OnDragNDropForEditor _callback)
+        {
+            switch (editorIdx)
+            {
+                case CURREDITORTYPE.ENVIRONMENT_EDITOR:
+                    callbackforDNDinEnvironmentEditor = _callback;
+                    break;
+                case CURREDITORTYPE.ASSET_EDITOR:
+                    callbackforDNDinAssetEditor = _callback;
+                    break;
+                case CURREDITORTYPE.TIMELINE_EDITOR:
+                    callbackforDNDinTimelineEditor = _callback;
+                    break;
             }
         }
 
@@ -122,7 +139,7 @@ namespace vrat
 
                 //선택된 asset idx를 바탕으로 asset을 testDeserialize하기
 
-                
+
                 currAsset = authorableAssetList[idx];
 
                 //최근 열린 editortype에 따라서 다른 callback 함수를 부르기
@@ -141,14 +158,42 @@ namespace vrat
                         break;
                 }
             }
+                //기타 걍 눌렀을 경우에는 일단 drag를 염두에 두자
         }
+
+        public override void OnDragStart(int idx)
+        {
+            
+            currAsset = authorableAssetList[idx];
+            
+            switch (currFloatingEditorWindow)
+            {
+                case CURREDITORTYPE.ENVIRONMENT_EDITOR:
+                    callbackforDNDinEnvironmentEditor(currFileList[idx].fullFileNamePath, currAsset, currFileList[idx].getTexture());
+                    break;
+                case CURREDITORTYPE.ASSET_EDITOR:
+                    callbackforDNDinAssetEditor(currFileList[idx].fullFileNamePath, currAsset, currFileList[idx].getTexture());
+                    break;
+                case CURREDITORTYPE.TIMELINE_EDITOR:
+                    callbackforDNDinTimelineEditor(currFileList[idx].fullFileNamePath, currAsset, currFileList[idx].getTexture());
+                    break;
+            }
+        }
+
+        
+        
+
 
         void tmpForSetCallback()
         {
             
             //setDCCallback(true, CURREDITORTYPE.ASSET_EDITOR, delegate (AuthorableAsset _aa) { Debug.Log("For double click, On Asset Editor callback"); });
-            setDCCallback(true, CURREDITORTYPE.ENVIRONMENT_EDITOR, delegate (string filename, AuthorableAsset _aa, Texture2D _prevImg) { Debug.Log("For double click, On Environment Editor callback"); });
-            setDCCallback(true, CURREDITORTYPE.TIMELINE_EDITOR, delegate (string filename, AuthorableAsset _aa, Texture2D _prevImg) { Debug.Log("For double click, On Timeline Editor callback"); });
+            setDCCallback(CURREDITORTYPE.ENVIRONMENT_EDITOR, delegate (string filename, AuthorableAsset _aa, Texture2D _prevImg) { Debug.Log("For double click, On Environment Editor callback"); });
+            setDCCallback(CURREDITORTYPE.TIMELINE_EDITOR, delegate (string filename, AuthorableAsset _aa, Texture2D _prevImg) { Debug.Log("For double click, On Timeline Editor callback"); });
+
+            setDragCallback(CURREDITORTYPE.ENVIRONMENT_EDITOR, delegate(string filename, AuthorableAsset _aa, Texture2D _prevImg) { Debug.Log("For double click, On Environment Editor callback"); });
+            setDragCallback(CURREDITORTYPE.ASSET_EDITOR, delegate(string filename, AuthorableAsset _aa, Texture2D _prevImg) { Debug.Log("For double click, On Asset Editor callback"); });
+
         }
 
         public override void initialize()
@@ -163,7 +208,15 @@ namespace vrat
             tmpForSetCallback();
 
             //asset editor로 건네줄 callback 함수 설정
-            setDCCallback(true, CURREDITORTYPE.ASSET_EDITOR, assetEditor.OnSelectAsset);
+            setDCCallback(CURREDITORTYPE.ASSET_EDITOR, assetEditor.OnSelectAsset);
+
+            setDragCallback(CURREDITORTYPE.TIMELINE_EDITOR, timelineEditor.OnSelectAsset);
+            //timeline editor로 건네줄 callbakc함수 설정
+
+            
+
+            //timeline editor로 드래그시 건네줄 callback 함수 설정
+
             base.initialize();
 
             //이 부분에서 모든 asset을 불러서 list에 집어넣기

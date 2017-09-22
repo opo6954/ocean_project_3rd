@@ -11,7 +11,7 @@ namespace vrat
     */
     public class VariableXmlTemplate : XmlTemplate
     {
-        public override XmlElement XmlSerialize(XmlDocument document, XmlElement parentElement)
+        public override XmlElement XmlSerialize(XmlDocument document, XmlElement parentElement, bool isRoot)
         {
             string propertyName = Name;
             string propertyType = Type;

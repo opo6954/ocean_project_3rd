@@ -13,6 +13,10 @@ namespace vrat
      * 일단 object 상대로 raycast 성공할 시 parent를 assetTarget으로 바꿔주기
      * 이후 target asset을 raycast의 끝부분에 위치시키면 됨
      * 
+     * 약간의 버그
+     * 
+     * v로 change view 바꾸는 거 constraint 줘서 하기
+     * 
      * 
      * */
     public class LocateAssetWithRay : MonoBehaviour
@@ -47,8 +51,7 @@ namespace vrat
         [SerializeField]
         public GameObject insituParent;
 
-        //3인칭에서 asset의 부모가 되는 gameobject --> environment
-    
+        //3인칭에서 asset의 부모가 되는 gameobject --> environment    
         public GameObject worldParent;
 
         //현재 선택된 placeable의 index를 말함
@@ -86,14 +89,15 @@ namespace vrat
         }
 
         
-        public void startLocate(GameObject _worldParent, GameObject _targetAsset, OnCallbackLocateDone _callback)
+        public void startLocate(GameObject _worldParent,GameObject _targetAsset, OnCallbackLocateDone _callback)
         {
             callback = _callback;
 
             worldParent = _worldParent;
+
+
             targetAsset = _targetAsset;
 
-            Debug.Log("hihi " + _targetAsset.name);
 
             isStart = true;
         }
@@ -102,12 +106,13 @@ namespace vrat
         public void holdObj()
         {
             //쥘 때 1인칭 부모로 바꿔주기
+
+            //hit.collider.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+            //첫번째 child가 detectingBox여야 함...
+            targetAsset.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
             targetAsset.transform.parent = insituParent.transform;
-
-            targetAsset.gameObject.layer = 2;
-
-            targetAsset.transform.GetComponentInChildren<Collider>().gameObject.layer = 2;
-            
 
             //집중 표식을 0,0,0으로 놓기
             concentrateMark.transform.position = new Vector3();
@@ -119,12 +124,12 @@ namespace vrat
         //obj를 놓을 때
         public void releaseObj()
         {
+            targetAsset.transform.GetChild(0).gameObject.layer = LayerMask.NameToLayer("PlaceableBox");
+
+
             //놓을 때 3인칭 부모로 바꿔주기
             targetAsset.transform.parent = worldParent.transform;
-
-            targetAsset.gameObject.layer = 0;
-            targetAsset.transform.GetComponentInChildren<Collider>().gameObject.layer = 0;
-
+            
             //놓았으니 callback 부르기
             callback(targetAsset.transform.localPosition, targetAsset.transform.localRotation.eulerAngles);
 
@@ -178,14 +183,17 @@ namespace vrat
                     //raycast 성공, 그리고들고 있을 경우
                     if (isHold == true)
                     {
-                        targetAsset.transform.position = hit.point;
+                        Debug.Log("name of hit object: " + hit.collider.transform.name);
+
+                        if (hit.collider.transform.parent.name.Contains(targetAsset.transform.name) == false)
+                            targetAsset.transform.position = hit.point;
+                        else
+                            targetAsset.transform.position = rayOrigin + (myCamera.transform.forward * range);
                     }
                     //raucast 성공, 들고 있지 않은 경우
                     else
                     {
-                        
                         concentrateMark.transform.position = hit.point;
-                        
                     }
                 }
                 else
@@ -218,14 +226,13 @@ namespace vrat
                         //놓고 있을 시 제대로 바라보고 있으면 잡기
                         if (Physics.Raycast(rayOrigin, myCamera.transform.forward, out hit, range))
                         {
-                            Debug.Log(hit.collider.name);
-                            Debug.Log(targetAsset.transform.name);
-
-                            if (hit.transform.name.Contains(targetAsset.transform.name) == true)
+                            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("PlaceableBox"))
                             {
-                                holdObj();
-                                    
-                            }                            
+                                if (hit.collider.transform.parent.name.Contains(targetAsset.transform.name) == true)
+                                {
+                                    holdObj();
+                                }
+                            }
                         }
                     }
                     

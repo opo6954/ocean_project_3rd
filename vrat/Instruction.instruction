@@ -1,0 +1,10 @@
+<vrat.InstPrimitivesTemplate name="Instruction">
+  <PairwiseAsset name="OwnedAssetName" type="STRING" contents="" />
+  <PossibleAttachedAssetType name="AttachedAssetType" type="STRING" contents="" />
+  <CustomizedProperty>
+    <vrat.ListOfXmlTemplate name="PropertiesList" type="ListOfXmlTemplate" idx="0">
+      <vrat.PrimitiveXmlTemplate name="Instruction" type="STRING" contents="이곳으로 와서 X 버튼을 누르세여" />
+      <vrat.PrimitiveXmlTemplate name="IsGlobalOrLocal" type="BOOL" contents="True" />
+    </vrat.ListOfXmlTemplate>
+  </CustomizedProperty>
+</vrat.InstPrimitivesTemplate>

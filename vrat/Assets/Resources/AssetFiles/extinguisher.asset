@@ -3,13 +3,13 @@
     <vrat.PrimitiveXmlTemplate name="IsGraspable" type="bool" contents="True" />
     <vrat.LocationXmlTemplate name="Location" type="location">
       <Position>
-        <x>6.392822</x>
-        <y>-4.200005</y>
-        <z>16.7477</z>
+        <x>26.60571</x>
+        <y>-4.119492</y>
+        <z>-1.425456</z>
       </Position>
       <Rotation>
         <x>0</x>
-        <y>139.8</y>
+        <y>120.9</y>
         <z>0</z>
       </Rotation>
     </vrat.LocationXmlTemplate>

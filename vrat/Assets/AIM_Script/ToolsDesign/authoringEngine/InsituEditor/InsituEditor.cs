@@ -18,6 +18,9 @@ namespace vrat
         /*
          * 170918 지금 버그 있음 ㅠㅠㅠㅠ
          * 두 번째로 insitu eidtor로 들어갈 때 targetasset gameobject가 없어지는지 몰라도 자꾸 missing reference exception 뜸...
+         * 
+         * asset은 안바뀌니까 걍 instantiate을 초반만 해놓고 위치만 새로 업데이트해서 바꾸자 걍...
+         * 
          * */
     public class InsituEditor : EditorTemplate
     {
@@ -56,26 +59,14 @@ namespace vrat
         string tagName;
 
         int currAssetIdx=-1;
+
+        bool isRespawned = false;
         
 
         //In-situ mode 시작
 
         public void clear()
         {
-            respawned = GameObject.FindGameObjectsWithTag(tagName);
-
-            
-            Debug.Log("On clear in insituEditor, " + respawned.Length);
-
-            for (int i = 0; i < respawned.Length; i++)
-            {
-                Debug.Log(respawned[i].name);
-                GameObject.Destroy(respawned[i].gameObject);
-            }
-
-            
-
-            
 
 
         }
@@ -94,31 +85,64 @@ namespace vrat
             respawnAllPlaceables();
         }
 
+        //다시 respawn하기
+        //물론 이때 맵 상에 respawn된 녀석들 모두 지워야 함
+        //추후 구현
+        public void updateRespawned()
+        {
+            isRespawned = false;
+        }
+
         private void respawnAllPlaceables()
         {
             Debug.Log("Respawan all placeables from the list of " + placeableList.Count);
 
-            for(int i=0; i<placeableList.Count; i++)
+            
+
+            //respawned 안된 상태일 때
+            if (isRespawned == false)
             {
-                //location parameter 불러오기
-                Location l = (placeableList[i].variableContainer.getParameters("Location") as LocationXmlTemplate).getVariable();
-                
-                //instantiate하기
-                GameObject respawnPlaceable = GameObject.Instantiate(Resources.Load(prefabPath + placeableList[i].ObjectName), environment.transform) as GameObject;
+                respawned = new GameObject[placeableList.Count];
 
-                respawnPlaceable.name = placeableList[i].ObjectName;
+                for (int i = 0; i < placeableList.Count; i++)
+                {
+                    //location parameter 불러오기
+                    Location l = (placeableList[i].variableContainer.getParameters("Location") as LocationXmlTemplate).getVariable();
 
-                //parent에 local 좌표로 맞추기
+                    //instantiate하기
+                    GameObject respawnPlaceable = GameObject.Instantiate(Resources.Load(prefabPath + placeableList[i].ObjectName), environment.transform) as GameObject;
 
-                respawnPlaceable.transform.localPosition = l.position;
-                respawnPlaceable.transform.localRotation = Quaternion.Euler(l.rotation);
+                    respawnPlaceable.name = placeableList[i].ObjectName;
 
-                respawnPlaceable.tag = tagName;
+                    //parent에 local 좌표로 맞추기
+
+                    respawnPlaceable.transform.localPosition = l.position;
+                    respawnPlaceable.transform.localRotation = Quaternion.Euler(l.rotation);
+
+                    respawnPlaceable.tag = tagName;
+
+                    respawned[i] = respawnPlaceable;
+                }
+
+                isRespawned = true;
             }
+                //이미 respawn 된 상태일 때, 걍 위치만 업데이트해주기
+            else
+            {
+                Debug.Log("length of respawned: " + respawned.Length);
+                for (int i = 0; i < placeableList.Count; i++)
+                {
+                    //location parameter 불러오기
+                    Location l = (placeableList[i].variableContainer.getParameters("Location") as LocationXmlTemplate).getVariable();
 
+                    Debug.Log(l.position);
+                    Debug.Log(respawned[i].transform.localPosition);
+                    
 
-            respawned = GameObject.FindGameObjectsWithTag(tagName);
-
+                    respawned[i].transform.localPosition = l.position;
+                    respawned[i].transform.localRotation = Quaternion.Euler(l.rotation);
+                }
+            }
         }
 
         //in situ mode에 들어갈 시 수행
@@ -130,12 +154,15 @@ namespace vrat
             
             fpsChar.changeView();
 
-            currAssetIdx=0;
+            currAssetIdx=-1;
 
+            if (respawned.Length == 0)
+            {
+                Debug.Log("No respanwed object found...");
+                return;
+            }
 
-            respawned = GameObject.FindGameObjectsWithTag(tagName);
-
-
+            //이름 가지고 찾기 
             for (int i=0; i<respawned.Length; i++)
             {
                 Debug.Log("for all respawned object name: " + respawned[i].name);
@@ -143,15 +170,16 @@ namespace vrat
 
                 if (respawned[i].name == _objectName)
                 {
-                    lasr.startLocate(environment, respawned[i], callbackFromFPS);
                     currAssetIdx = i;
-
-                    return;
-
                 }
             }
 
-            Debug.Log("Cannot find respwned name and given obj name...");
+            //이름으로 찾은 경우
+            if(currAssetIdx > -1)
+                lasr.startLocate(environment, respawned[currAssetIdx], callbackFromFPS);
+            //이름으로 못찾은 경우
+            else
+                Debug.Log("Cannot find respwned name and given obj name...");
 
             
             
@@ -173,9 +201,6 @@ namespace vrat
             (currOT.variableContainer.getParameters("Location") as LocationXmlTemplate).setParameter(new Location(pos, rot));
 
             assetEditor.OnSaveFromInSituPlacement();
-
-
-
         }
 
 

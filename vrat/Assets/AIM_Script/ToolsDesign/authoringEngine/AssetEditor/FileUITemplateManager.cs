@@ -9,14 +9,17 @@ namespace vrat
      * FileUITemplate에서 이름과 이미지 setting을 담당
      * */
     public class FileUITemplateManager : MonoBehaviour
-    {
+    { 
+        [SerializeField]
         UnityEngine.UI.Text myText;
+
+        [SerializeField]
         UnityEngine.UI.Image myImage;
          
-        private readonly float xOffset = 150;
-        private readonly float yOffset = -150;
+        protected float xOffset = 150;
+        protected float yOffset = -150;
 
-        private readonly float xInitOffset = 10;
+        protected float xInitOffset = 10;
 
         //몇번째 template인지..
         public int idx;
@@ -24,29 +27,27 @@ namespace vrat
         public delegate void OnClickCallback(int myIdx);
         public OnClickCallback callback;
 
-        public UnityEngine.UI.Button b;
+        public delegate void OnDragCallback(int myIdx);
+        public OnDragCallback callbackDrag;
 
+
+        public UnityEngine.UI.Button button;
 
 
         void Start()
         {
-            
+            xOffset = 150;
+            yOffset = -150;
+            xInitOffset = 10;
         }
-
-        
-
-        public void setComponent()
+        public void setIdx(int _idx)
         {
-            myImage = GetComponent<UnityEngine.UI.Image>();
-            myText = transform.GetChild(0).GetComponent<UnityEngine.UI.Text>();
+            idx = _idx;
         }
-
-        
-
 
         //적당한 여백으로 배치하기
         //몇번째 녀석인지도 받음
-        public void setPosition(int _idx)
+        public virtual void setPosition(int _idx)
         {
             idx = _idx;
 
@@ -87,11 +88,23 @@ namespace vrat
         public void setOnClickListener(OnClickCallback _callback)
         {
             callback = _callback;
-            b = GetComponent<UnityEngine.UI.Button>();
-            b.onClick.AddListener(delegate{ callback(idx); });
-            //transform.GetChild(0).GetComponent<UnityEngine.UI.Button>().onClick.AddListener(delegate() { callback(idx); });
-            
+            button = GetComponent<UnityEngine.UI.Button>();
+            button.onClick.AddListener(delegate{ callback(idx); });
         }
+
+        public void setOnDragListener(OnDragCallback _callback)
+        {
+            callbackDrag = _callback;
+        }
+
+        //drag start할 떄의 event
+        public void OnDragStart()
+        {
+            //drag callback 전해주기
+            callbackDrag(idx);
+        }
+
+
 
 
         public bool setName(string _fileName)

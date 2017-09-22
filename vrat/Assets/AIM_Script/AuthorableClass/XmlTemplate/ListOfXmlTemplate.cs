@@ -15,8 +15,8 @@ namespace vrat
         public int selectedIdx = 0;
 
 
-        public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement)
-        {
+        public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement, bool isRoot)
+        {  
             string propertyName = Name;
             string propertyType = Type;
 
@@ -30,7 +30,7 @@ namespace vrat
             
             foreach(XmlTemplate q in xmlTemplateList)
             {
-                q.XmlSerialize(document, individualProperty);
+                q.XmlSerialize(document, individualProperty,false);
             }
 
             return individualProperty;
@@ -76,6 +76,7 @@ namespace vrat
         {
             if(xmlTemplateList.Count > idx)
             {
+                Debug.Log(xmlTemplateList[idx].Name);
                 return xmlTemplateList[idx];
             }
 

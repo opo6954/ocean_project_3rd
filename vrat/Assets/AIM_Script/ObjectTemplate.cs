@@ -10,9 +10,17 @@ using UnityEngine;
  * 
  * object template이 authoring에서도 쓰이고 training에서도 공통으로 쓰이는 structure를 만들자
  * 
- * 일단 xml serializer가 필요함
  * 
- * variable의 종류
+ * 170920//. 구현상의 문제....
+ * 지금 문제가 있는데 xml deserialize를 할 때 따로 형식 없이 구성됨
+ * 
+ * 즉 xml로부터 죄다 파라미터 등을 raw하게 읽어옴
+ * 
+ * 본래는 event의 경우 나름 정해진 포맷이 있기 때문에
+ * 
+ * 이 포맷에 맞춰서 그 포맷의 파라미터를 바꾸는 형식으로 짜야 함
+ * 
+ * 물론 asset의 경우 그 포맷이 애매하기 때문에 걍 raw하게 읽어도 되는데 event 등은 왠만하면 다 정해진 형식이라 파라미터 찾아서 변경시키는 게 더 안전함
  * 
  * 
  * 
@@ -25,7 +33,7 @@ namespace vrat
     //object의 종류임, 일단 asset, vent, scenario로 정리
     public enum OBJTYPE
     {
-        ASSET, ROOM, ENVIRONMENT, EVENT, TRANSITION, SCENARIO
+        ASSET, ROOM, ENVIRONMENT, EVENT, TIMELINE, SCENARIO
     }
     
     public class VariableContainer
@@ -38,6 +46,11 @@ namespace vrat
             {
                 variableList.Add(xt);
             }
+        }
+
+        public void clearVariableAll()
+        {
+            variableList.Clear();
         }
 
         public int getVariableCount()
@@ -104,7 +117,7 @@ namespace vrat
 
     } 
 
-  
+    
      
     public class ObjectTemplate
     {
@@ -157,7 +170,7 @@ namespace vrat
         //파라미터로 받은 xml document에 관련 정보를 쓰면 됩니다
 
         
-
+        //root에 붙여서 serialize하는 함수 만들어야 함...
         
 
         protected XmlElement serializeCustomizedProperty2Xml(XmlDocument document, XmlElement parentElement)
@@ -168,30 +181,21 @@ namespace vrat
 
             for (int i = 0; i < variableContainer.getVariableCount(); i++)
             {
-                variableContainer.getParameters(i).XmlSerialize(document, individualProperty);
+                variableContainer.getParameters(i).XmlSerialize(document, individualProperty,false);
             }
 
             return individualProperty;
 
         }
 
-        protected XmlElement serializeRootElement2Xml(XmlDocument document)
-        {
-            XmlElement rootElement = document.CreateElement(ObjectType.ToString());
-
-            rootElement.SetAttribute("name", ObjectName);
-
-            document.AppendChild(rootElement);
-
-
-            return rootElement;
-        }
+        
 
         public virtual void testSerialize(string xmlName)
         {
+
             XmlDocument document = new XmlDocument();
 
-            serialize2Xml(document);
+            serialize2Xml(document,null,true);
 
             document.Save(xmlName);
 
@@ -206,40 +210,48 @@ namespace vrat
 
             XmlNodeList pq = ppa.ChildNodes;
 
+            //variable Container 죄다 지워버리자
 
 
-            deserializeFromXml(pq);
+            deserializeFromXml(pq[0]);
 
         }
-
+        //아직 copy 구현 안됨 continue...
         public void copyValueOnly(ObjectTemplate _target)
         {
             ObjectName = _target.ObjectName;
             ObjectType = _target.ObjectType;
             variableContainer.copyValueOnly(_target.variableContainer);
-            
-            
-          
         }
 
-
-        protected virtual bool serialize2Xml(XmlDocument document)
+        public virtual bool serialize2Xml(XmlDocument document, XmlElement rootElement, bool isRoot)
         {
-            XmlElement xe = serializeRootElement2Xml(document);
-            serializeCustomizedProperty2Xml(document, xe);
+            XmlElement root = document.CreateElement(ObjectType.ToString());
+            root.SetAttribute("name", ObjectName);
+
+            if (isRoot == true)
+            {
+                document.AppendChild(root);
+            }
+            else
+            {
+                rootElement.AppendChild(root);
+            }
+
+            serializeCustomizedProperty2Xml(document, root);
 
             return true;
         }
         
-        protected virtual bool deserializeFromXml(XmlNodeList childNodeList)
+        public virtual bool deserializeFromXml(XmlNode rootNode)
         {
-            
-            string type = "";
-
-            XmlNode rootNode = childNodeList[0];
+            variableContainer.clearVariableAll();
 
             if (rootNode.Name != ObjectType.ToString())
             {
+                Debug.Log("not equal for rootNode Name and obj type");
+                Debug.Log("Root name: " + rootNode.Name);
+                Debug.Log("obj type name: " + objectType.ToString());
                 return false;
             }
 
@@ -265,21 +277,25 @@ namespace vrat
             return true;
         }
 
-        private bool deserializeChildEachInside(XmlNodeList xnList)
+        protected bool deserializeChildEachInside(XmlNodeList xnList)
         {
             foreach (XmlNode xn in xnList)
             {
-                
                 XmlAttributeCollection xac = xn.Attributes;
 
                 //기본 primitiveXmlTemplate일 시
                 if (xn.Name == "vrat.ListOfXmlTemplate")
                 {
-                    deserializeChildEachForList(xn);
+                    variableContainer.addParameter(deserializeChildEachForList(xn));
                 }
                 else
                 {
-                    variableContainer.addParameter(createInstanceListElement(xn));
+                    XmlTemplate xt = createInstanceListElement(xn);
+                    if (variableContainer.checkParameter(xt.Name) == true)
+                    {
+                        Debug.Log("Already exist for " + xt.Name);
+                    }
+                    variableContainer.addParameter(xt);
                 }
             }
 
@@ -289,8 +305,9 @@ namespace vrat
         //일단 돌리기
 
         //list of list of xmlTemplate은 생각하지 말자......... 쓰지마!!
-        private bool deserializeChildEachForList(XmlNode _node)
+        private XmlTemplate deserializeChildEachForList(XmlNode _node)
         {
+            
             XmlAttributeCollection xac = _node.Attributes;
 
             string name = xac["name"].InnerText;
@@ -303,15 +320,24 @@ namespace vrat
 
             foreach(XmlNode _childNode in _node.ChildNodes)
             {
-                xtList.addList(createInstanceListElement(_childNode));
+
+                if (_childNode.Name == "vrat.ListOfXmlTemplate")
+                {
+                    xtList.addList(deserializeChildEachForList(_childNode));
+                }
+                else
+                {
+                    XmlTemplate xe = createInstanceListElement(_childNode);
+                    xtList.addList(xe);
+                }
             }
 
-            variableContainer.addParameter(xtList);
-
-
-            return true;
+            return xtList;
         }
         //list xml template의 경우 xmltemplate을 새로 instantiate해야 하는 데 이 부분에서 수행함
+        //이미 있는 것에서 찾아서 해도 됨
+
+
         private XmlTemplate createInstanceListElement(XmlNode _node)
         {
             XmlAttributeCollection xac = _node.Attributes;
@@ -321,9 +347,8 @@ namespace vrat
 
             if (_node.Name == "vrat.PrimitiveXmlTemplate")
             {
-
                 string contents = xac["contents"].InnerText;
-
+                
                 PrimitiveXmlTemplate pxt = new PrimitiveXmlTemplate(name, contents, type);
 
                 return pxt;
@@ -346,6 +371,28 @@ namespace vrat
             {
                 VariableXmlTemplate vxt = new VariableXmlTemplate(name, type);
                 return vxt;
+            }
+
+            else if(_node.Name == "vrat.TriggerPrimitivesTemplate")
+            {
+                TriggerPrimitivesTemplate tpt = new TriggerPrimitivesTemplate(name, type);
+
+                tpt.deserializeFromXml(_node);
+                return tpt;
+            }
+            else if (_node.Name == "vrat.ActionPrimitivesTemplate")
+            {
+                ActionPrimitivesTemplate apt = new ActionPrimitivesTemplate(name, type);
+                apt.deserializeFromXml(_node);
+
+                return apt;
+            }
+            else if (_node.Name == "vrat.InstPrimitivesTemplate")
+            {
+                InstPrimitivesTemplate ipt = new InstPrimitivesTemplate(name, type);
+                ipt.deserializeFromXml(_node);
+
+                return ipt;
             }
 
             else
@@ -386,140 +433,5 @@ namespace vrat
 
             return l;
         }
-
-        /*
-   protected override bool deserializeFromXml(XmlNodeList childNodeList)
-    {
-        XmlNode rootNode = childNodeList[0];
-
-        //ASSET이 root에 있을 경우 그대로 진행
-        if(rootNode.Name != ObjectType.ToString())
-        {
-            return false;
-        }
-
-        XmlAttributeCollection xac1 = rootNode.Attributes;
-
-
-        //asset의 이름 불러오기
-        ObjectName = rootNode.Attributes[0].InnerText;
-
-
-        XmlNode customizedProperty = rootNode.ChildNodes[0];
-
-        //customizedProperty 값 확인
-        if(customizedProperty.Name != "CustomizedProperty")
-        { 
-            return false;
-        }
-
-        XmlNodeList propertyList = customizedProperty.ChildNodes;
-
-        //이 부분에서 primitiveXmlTemplate 등이 등장함
-
-
-        foreach(XmlNode xn in propertyList)
-        {
-            string className = xn.Name;
-            string name="";
-            string type="";
-            string contents="";
-
-            XmlAttributeCollection xac = xn.Attributes;
-
-            if (className == "vrat.PrimitiveXmlTemplate")
-            {
-                name = xac["name"].InnerText;
-                type = xac["type"].InnerText;
-                contents = xac["contents"].InnerText;
-
-
-                if (variableContainer.checkParameter(name) == true)
-                {
-                    XmlTemplate xt = variableContainer.getParameters(name);
-                    xt.ClassName = "PrimitiveXmlTemplate";
-
-                    (xt as PrimitiveXmlTemplate).setparameter(contents);
-                }
-            }
-            else if (className == "vrat.LocationXmlTemplate")
-            {
-                name = xac["name"].InnerText;
-                type = xac["type"].InnerText;
-
-
-                //location에 맞는 거 하기
-
-                if (variableContainer.checkParameter(name) == true)
-                {
-                    XmlTemplate xt = variableContainer.getParameters(name);
-                    xt.ClassName = "LocationXmlTemplate";
-
-                    Vector3 pos = new Vector3();
-                    Vector3 rot = new Vector3();
-
-
-                    foreach (XmlNode xnInner in xn.ChildNodes)
-                    {
-
-                        XmlAttributeCollection xacInner = xnInner.Attributes;
-
-
-                        if (xnInner.Name == "Position")
-                        {
-                            pos.x = float.Parse(xnInner["x"].InnerText);
-                            pos.y = float.Parse(xnInner["y"].InnerText);
-                            pos.z = float.Parse(xnInner["z"].InnerText);
-;
-                        }
-                        if (xnInner.Name == "Rotation")
-                        {
-                            rot.x = float.Parse(xnInner["x"].InnerText);
-                            rot.y = float.Parse(xnInner["y"].InnerText);
-                            rot.z = float.Parse(xnInner["z"].InnerText);
-
-                        }
-                    }
-                    (xt as LocationXmlTemplate).setParameter(new Location(pos, rot));
-                }
-            }
-            else if (className == "vrat.ListOfXmlTemplate")
-            {
-                name = xac["name"].InnerText;
-                type = xac["type"].InnerText;
-                string selectedIdx = xac["idx"].InnerText;
-
-
-
-
-                if (variableContainer.checkParameter(name) == true)
-                {
-                    ListOfXmlTemplate xt = variableContainer.getParameters(name) as ListOfXmlTemplate;
-                    xt.ClassName = "ListOfXmlTemplate";
-                    xt.setIdx(int.Parse(selectedIdx));
-
-                    foreach (XmlNode xnInner in xn.ChildNodes)
-                    {
-                        XmlAttributeCollection xacInner = xnInner.Attributes;
-
-                        string classNameInner = xnInner.Name;
-                        string nameInner = xacInner["name"].InnerText;
-                        string typeInner = xacInner["type"].InnerText;
-
-
-                        XmlTemplate xmlTemplate = System.Activator.CreateInstance(System.Type.GetType(classNameInner), new object[]{nameInner, typeInner}) as XmlTemplate;
-
-                        xt.addList(xmlTemplate);
-                    }
-                }
-            }
-        }
-    */
-
-
-
-
-
-
     }
 }

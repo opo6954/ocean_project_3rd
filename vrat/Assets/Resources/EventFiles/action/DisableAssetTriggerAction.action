@@ -1,0 +1,7 @@
+<vrat.ActionPrimitivesTemplate name="DisableAssetTriggerAction" type="ActionPrimitivesTemplate">
+  <PairwiseAsset name="OwnedAssetName" type="STRING" contents="" />
+  <PossibleAttachedAssetType name="AttachedAssetType" type="STRING" contents="" />
+  <CustomizedProperty>
+    <vrat.ListOfXmlTemplate name="PropertiesList" type="ListOfXmlTemplate" idx="0" />
+  </CustomizedProperty>
+</vrat.ActionPrimitivesTemplate>

@@ -13,7 +13,7 @@ namespace vrat
     public class EnvironmentEditor : FileExplorerTemplate
     {        
         //최근 room xml 정보
-        RoomXmlTemplate currRoom;
+        AuthorableRoom currRoom;
 
         //environment 부모 object
         GameObject environmentParent;
@@ -53,7 +53,7 @@ namespace vrat
             {
                 Debug.Log("We catch double click event on " + idx.ToString());
 
-                currRoom = new RoomXmlTemplate();
+                currRoom = new AuthorableRoom();
 
                 currRoom.initialize();
 
@@ -61,7 +61,7 @@ namespace vrat
 
                 string prefabName = (currRoom.variableContainer.getParameters("PrefabName") as PrimitiveXmlTemplate).getVariable();
                 
-                currRoomObject = GameObject.Instantiate(Resources.Load(envPrefabPath + "EngineRoom"), new Vector3(), Quaternion.Euler(50, -30, 0), environmentParent.transform) as GameObject;
+                currRoomObject = GameObject.Instantiate(Resources.Load(envPrefabPath + prefabName), new Vector3(), Quaternion.Euler(50, -30, 0), environmentParent.transform) as GameObject;
                 currRoomObject.transform.localPosition = new Vector3();
                 currRoomObject.transform.localRotation = Quaternion.Euler(50, -30, 0);
                 

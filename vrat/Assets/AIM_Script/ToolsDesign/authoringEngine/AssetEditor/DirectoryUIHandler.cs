@@ -138,7 +138,6 @@ namespace vrat
                 assetNameList[i].setTexture();
 
                 FileUITemplateManager ftm = go.GetComponent<FileUITemplateManager>();
-                ftm.setComponent();
 
                 if (ftm.setName(assetNameList[i].fileName) == false)
                     Debug.Log("No text component found...");

@@ -18,6 +18,7 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 	
 	public void OnDrop(PointerEventData data)
 	{
+        Debug.Log("On drop... in " + gameObject.name);
 		containerImage.color = normalColor;
 		
 		if (receivingImage == null)
@@ -30,6 +31,7 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 
 	public void OnPointerEnter(PointerEventData data)
 	{
+        Debug.Log("On pointer enter on " + gameObject.name);
 		if (containerImage == null)
 			return;
 		
@@ -52,7 +54,7 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 		if (originalObj == null)
 			return null;
 		
-		var dragMe = originalObj.GetComponent<DragMe>();
+		var dragMe = originalObj.GetComponent<vrat.DragMe>();
 		if (dragMe == null)
 			return null;
 		
