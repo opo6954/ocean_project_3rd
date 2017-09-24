@@ -14,7 +14,7 @@ namespace vrat
         public TriggerPrimitivesTemplate(string _name, string _type) : base(_name, _type)
         {
             ClassName = "TriggerPrimitivesTemplate";
-        }
+        } 
 
         public void exampleGazeTrigger()
         {

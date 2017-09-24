@@ -14,11 +14,85 @@ namespace vrat
             base.initialize();
             ObjectType = OBJTYPE.EVENT;
             initForEvent();
+            Debug.Log("init?");
+        }
+        /*
+         * 일단 hard coding으로 Trigger를 불러오자...
+         * */
+
+        public void addTrigger(PAUTPrimitivesTemplate origin)
+        {
+            //trigger 복사하기
+            PAUTPrimitivesTemplate tpt = variableContainer.getParameters(1) as PAUTPrimitivesTemplate;
+            PAUTPrimitivesTemplate.CopyPAUT(origin, ref tpt);
+        }
+        public void deleteTrigger()
+        {
+            TriggerPrimitivesTemplate tpt = variableContainer.getParameters(1) as TriggerPrimitivesTemplate;
+            tpt.clearParamValueAll();
+        }
+
+        public void addBeforeAction(PAUTPrimitivesTemplate origin)
+        {
+            //action 복사하기
+            
+
+            ActionPrimitivesTemplate beforeAct = new ActionPrimitivesTemplate("", "");
+
+            PAUTPrimitivesTemplate beforeActBase = beforeAct as PAUTPrimitivesTemplate;
+
+            PAUTPrimitivesTemplate.CopyPAUT(origin, ref beforeActBase);
+
+            Debug.Log("before act: " + beforeAct.Name);
+            Debug.Log("list name of event: " + (variableContainer.getParameters("BeforeActionList") as ListOfXmlTemplate).Name);
+            
+
+            (variableContainer.getParameters("BeforeActionList") as ListOfXmlTemplate).addList(beforeAct);
+        }
+        public void addAfterAction(PAUTPrimitivesTemplate origin)
+        {
+            ActionPrimitivesTemplate afterAct = new ActionPrimitivesTemplate("", "");
+
+            PAUTPrimitivesTemplate afterActBase = afterAct as PAUTPrimitivesTemplate;
+
+            PAUTPrimitivesTemplate.CopyPAUT(origin, ref afterActBase);
+
+            (variableContainer.getParameters("AfterActionList") as ListOfXmlTemplate).addList(afterActBase);
+        }
+
+        public void addInstruction(PAUTPrimitivesTemplate origin)
+        {
+            InstPrimitivesTemplate instruction = new InstPrimitivesTemplate("", "");
+
+            PAUTPrimitivesTemplate instructionBase = instruction as PAUTPrimitivesTemplate;
+
+            PAUTPrimitivesTemplate.CopyPAUT(origin, ref instructionBase);
+
+            (variableContainer.getParameters("InstructionList") as ListOfXmlTemplate).addList(instructionBase);
+        }
+
+        public void deleteBeforeAction(PAUTPrimitivesTemplate origin)
+        {
+            (variableContainer.getParameters("BeforeActionList") as ListOfXmlTemplate).deleteList(origin);
+        }
+
+        public void deleteAfterAction(PAUTPrimitivesTemplate origin)
+        {
+            (variableContainer.getParameters("AfterActionList") as ListOfXmlTemplate).deleteList(origin);
+        }
+        //제일 끝에 있는 instruction 지우기
+        public void deleteInstruction()
+        {
+            (variableContainer.getParameters("InstructionList") as ListOfXmlTemplate).deleteListEnd();
+        }
+        public void deleteInstruction(PAUTPrimitivesTemplate origin)
+        {
+            (variableContainer.getParameters("InstructionList") as ListOfXmlTemplate).deleteList(origin);
         }
 
         //event는 asset과는 다르게 기본 얘들이 정해져 있음
         void initForEvent()
-        {
+        { 
             //attached asset 설정
 
             variableContainer.addParameter(new PrimitiveXmlTemplate("AttachedAsset", "string"));

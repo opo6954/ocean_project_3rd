@@ -1,25 +1,12 @@
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-/*
- * Timeline¿¡¼­ÀÇ dragMe¸¦ ´Ù½Ã Á¤ÀÇÇÏÀÚ,
- * 
- * ¿©±â¼­ icon¿¡¼­ÀÇ image ¿©ºÎ µîÀ» ¹Ù²ã¾ß ÇÕ´Ï´ç
- * 
- * icon instantiate µÉ ¶§ ÀüÃ¼ formÀ» º¹»çÇß´Ù°¡ Áö¿ì´Â Çü½ÄÀ¸·Î ÇÕ½Ã´ç
- * 
- * 
- * primitveUI¿¡¼­ dragMe °¡´ÉÇÏ°í
- * 
- * primitveUIWindow·Î drop½Ã À§Ä¡ ÀÌµ¿
- * timelineWindow·Î drop½Ã event·Î ¶³±¼ ¼ö ÀÖµµ·Ï ÇÏ±â...
- * 
- * */
+
 namespace vrat
 {
-    //[RequireComponent(typeof(Image))]
-    public class DragMeTimeline : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class DragMeEvent : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         public bool dragOnSurfaces = true;
 
@@ -28,13 +15,13 @@ namespace vrat
 
         [SerializeField]
         FileUITemplateManager fileUITemplate;
-        
+
         public delegate void OnDragStartCallback();
         public OnDragStartCallback callbackDrag;
 
         void Start()
         {
-            //drag start¸¦ À§ÇÑ callback ÇÔ¼ö ¼³Á¤ÇÏ±â
+            //drag startë¥¼ ìœ„í•œ callback í•¨ìˆ˜ ì„¤ì •í•˜ê¸°
             callbackDrag = fileUITemplate.OnDragStart;
         }
 
@@ -51,16 +38,16 @@ namespace vrat
 
 
 
-            //º»ÀÎ °ÍÀ» º¹Á¦ÇÏ±â
+            //ë³¸ì¸ ê²ƒì„ ë³µì œí•˜ê¸°
             m_DraggingIcons[eventData.pointerId] = GameObject.Instantiate(gameObject);
 
-            
-            //ÀÌ¹ÌÁö °ü·ÃµÈ °Í ¿ÜÀÇ °ÍÀº ¸ğµÎ ²¨¹ö¸®±â
-            m_DraggingIcons[eventData.pointerId].GetComponent<primitivesUIManager>().enabled = false;
-            m_DraggingIcons[eventData.pointerId].GetComponent<Button>().enabled = false;
-            m_DraggingIcons[eventData.pointerId].GetComponent<DragMeTimeline>().enabled = false;
 
-            
+            //ì´ë¯¸ì§€ ê´€ë ¨ëœ ê²ƒ ì™¸ì˜ ê²ƒì€ ëª¨ë‘ êº¼ë²„ë¦¬ê¸°
+            m_DraggingIcons[eventData.pointerId].GetComponent<eventUIManager>().enabled = false;
+            m_DraggingIcons[eventData.pointerId].GetComponent<Button>().enabled = false;
+            m_DraggingIcons[eventData.pointerId].GetComponent<DragMeEvent>().enabled = false;
+
+
 
             m_DraggingIcons[eventData.pointerId].transform.SetParent(canvas.transform, false);
             m_DraggingIcons[eventData.pointerId].transform.SetAsLastSibling();
@@ -92,8 +79,8 @@ namespace vrat
 
             var rt = m_DraggingIcons[eventData.pointerId].GetComponent<RectTransform>();
             Vector3 globalMousePos;
-            //°¡¿îµ¥¿¡ ³õ±â
-            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(m_DraggingPlanes[eventData.pointerId], new Vector2(eventData.position.x - rt.rect.width/2, eventData.position.y + rt.rect.height/2), eventData.pressEventCamera, out globalMousePos))
+            //ê°€ìš´ë°ì— ë†“ê¸°
+            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(m_DraggingPlanes[eventData.pointerId], new Vector2(eventData.position.x - rt.rect.width / 2, eventData.position.y + rt.rect.height / 2), eventData.pressEventCamera, out globalMousePos))
             {
                 rt.position = globalMousePos;
                 rt.rotation = m_DraggingPlanes[eventData.pointerId].rotation;
@@ -102,7 +89,7 @@ namespace vrat
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            //ÀÌ ºÎºĞ¿¡¼­ ¾îµğ¿¡ ¶³¾îÁ³´ÂÁö ¾Ë ¼ö ÀÖ³ª?
+            //ì´ ë¶€ë¶„ì—ì„œ ì–´ë””ì— ë–¨ì–´ì¡ŒëŠ”ì§€ ì•Œ ìˆ˜ ìˆë‚˜?
 
             if (m_DraggingIcons[eventData.pointerId] != null)
                 Destroy(m_DraggingIcons[eventData.pointerId]);

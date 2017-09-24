@@ -23,13 +23,13 @@ namespace vrat
         //scenario에 포함된 room list
         //일단 지금은 걍 room으로 놓자
         //추후에는 authorableEnv로 해서 in-situ나 room의 배치, teleport 등도 같이 넣어야 함 지금은 시간이 없으니 걍 room으로 넣자..
-        List<AuthorableRoom> roomList = new List<AuthorableRoom>();
+        public List<AuthorableRoom> roomList = new List<AuthorableRoom>();
 
         //scenario에 포함된 asset list
-        List<AuthorableAsset> assetList = new List<AuthorableAsset>();
+        public List<AuthorableAsset> assetList = new List<AuthorableAsset>();
 
         //scenario에 포함된 timeline list
-        List<AuthorableTimeline> timelineList = new List<AuthorableTimeline>();
+        public List<AuthorableTimeline> timelineList = new List<AuthorableTimeline>();
 
         public override void initialize()
         {

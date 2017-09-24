@@ -19,7 +19,7 @@ namespace vrat
     public class AuthorableTimeline : ObjectTemplate
     {
         //event list임
-        List<AuthorableEvent> eventList = new List<AuthorableEvent>();
+        public List<AuthorableEvent> eventList = new List<AuthorableEvent>();
 
         public override void initialize()
         {
@@ -27,6 +27,8 @@ namespace vrat
             ObjectType = OBJTYPE.TIMELINE;
             initForTimeline();
         }
+
+
 
         void initForTimeline()
         {

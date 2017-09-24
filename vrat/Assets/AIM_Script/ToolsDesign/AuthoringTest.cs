@@ -68,15 +68,22 @@ namespace vrat
             
              //Test for Action xml primitives
             /*
+            
             ActionPrimitivesTemplate apt = new ActionPrimitivesTemplate("", "");
             string ext = "action";
 
             apt.exampleActiveRenderAction();apt.testSerializeWithExt(ext);
+            apt.clearParamValueAll();
             apt.exampleDeactiveRenderAction();apt.testSerializeWithExt(ext);
+            apt.clearParamValueAll();
             apt.exampleEnableAssetTriggerAction();apt.testSerializeWithExt(ext);
+            apt.clearParamValueAll();
             apt.exampleDisableAssetTriggerAction();apt.testSerializeWithExt(ext);
+            apt.clearParamValueAll();
             apt.exampleStartParticleTriggerAction();apt.testSerializeWithExt(ext);
+            apt.clearParamValueAll();
             apt.exampleStopParticleTriggerAction();apt.testSerializeWithExt(ext);
+            apt.clearParamValueAll();
 
 
             ActionPrimitivesTemplate apt2 = new ActionPrimitivesTemplate("", "");
@@ -91,8 +98,11 @@ namespace vrat
             TriggerPrimitivesTemplate tpt = new TriggerPrimitivesTemplate("GazeTrigger", "TriggerPrimitivesTemplate");
 
             tpt.exampleGazeTrigger();tpt.testSerialize("GazeTrigger.trigger");
+            tpt.clearParamValueAll();
             tpt.exampleInputDownTrigger();tpt.testSerialize("InputDownTrigger.trigger");
+            tpt.clearParamValueAll();
             tpt.exampleCollisionTrigger();tpt.testSerialize("CollisionTrigger.trigger");
+            tpt.clearParamValueAll();
             tpt.exampleMonitorDistanceCapturedTrigger();tpt.testSerialize("MonitorDistanceCapturedTrigger.trigger");
 
 

@@ -4,11 +4,10 @@
   <CustomizedProperty>
     <vrat.ListOfXmlTemplate name="PropertiesList" type="ListOfXmlTemplate" idx="0">
       <vrat.ListOfXmlTemplate name="TriggerType" type="CHOICE" idx="0">
-        <vrat.PrimitiveXmlTemplate name="TriggerType0" type="STRING" contents="GazeEnter" />
-        <vrat.PrimitiveXmlTemplate name="TriggerType1" type="STRING" contents="GazeHold" />
-        <vrat.PrimitiveXmlTemplate name="TriggerType2" type="STRING" contents="GazeExit" />
+        <vrat.PrimitiveXmlTemplate name="TriggerType0" type="STRING" contents="CollisionEnter" />
+        <vrat.PrimitiveXmlTemplate name="TriggerType1" type="STRING" contents="CollisionHold" />
+        <vrat.PrimitiveXmlTemplate name="TriggerType2" type="STRING" contents="CollisionExit" />
       </vrat.ListOfXmlTemplate>
-      <vrat.PrimitiveXmlTemplate name="KeyName" type="STRING" contents="x" />
     </vrat.ListOfXmlTemplate>
   </CustomizedProperty>
 </vrat.TriggerPrimitivesTemplate>

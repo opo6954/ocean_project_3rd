@@ -14,6 +14,9 @@ namespace vrat
         [SerializeField]
         RectTransform rectForPrimitives;
 
+        [SerializeField]
+        RectTransform rectForTimeline;
+
         
 
 
@@ -35,6 +38,10 @@ namespace vrat
             if (RectTransformUtility.RectangleContainsScreenPoint(rectForPrimitives, data.position, Camera.main) == true)
             {
                 timelineEditor.OnDetectDropOnPrimitives(data);
+            }
+            else if (RectTransformUtility.RectangleContainsScreenPoint(rectForTimeline, data.position, Camera.main) == true)
+            {
+                timelineEditor.OnDetectDropOnTimeline(data);
             }
         }
 

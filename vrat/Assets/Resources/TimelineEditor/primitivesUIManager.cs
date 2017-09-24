@@ -23,12 +23,25 @@ namespace vrat
         //나의 primitive 이름임, 이걸로 어느 trigger인지 찾을 수 있음
         string primName;
 
+        //사용자가 붙여준 이름임
+        string userName="";
+
 
         float clickdelay = 0.5f;
         float clicktime = 0.0f;
 
         public delegate void OnDoubleClickCallback(int idx);
         public OnDoubleClickCallback callback;
+
+        public void setNameFromUser(string _userName)
+        {
+            userName = _userName;
+        }
+
+        public string getNameFromUser()
+        {
+            return userName;
+        }
 
         public PAUTPrimitivesTemplate getPAUTPrimitiveTemplate()
         {
@@ -49,10 +62,10 @@ namespace vrat
 
         public void setMyUIType(PRIMITIVESUI _type)
         {
-            setOnDragListener(tmp);
             myUIType = _type;
             
         }
+
 
         public PRIMITIVESUI getMyUIType()
         {
@@ -114,11 +127,6 @@ namespace vrat
             
         }
 
-        public void tmp(int idx)
-        {
-            
-        }
-
         
 
         //drag and drop으로 
@@ -129,38 +137,6 @@ namespace vrat
                 callback(idx);
             }
         }
-        /*
-         * int clicked = 0;
-        float clickdelay = 0.5f;
-        float clicktime = 0.0f;
-        int prevIdx = -1;
 
-        protected bool isDoubleClick(int _idx)
-        {
-            clicked++;
-            
-            if (clicked == 1)
-            {
-                clicktime = Time.time;
-                prevIdx = _idx;
-            }
-
-
-            if (clicked > 1 && Time.time - clicktime < clickdelay && prevIdx == _idx)
-            {
-                clicked = 0;
-                clicktime = 0;
-                prevIdx = -1;
-                return true;
-            }
-            else if (clicked > 2 || Time.time - clicktime > 1)
-            {
-                clicked = 0;
-                prevIdx = -1;
-            }
-
-            return false;
-        }
-         * */
     }
 }

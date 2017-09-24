@@ -54,11 +54,38 @@ namespace vrat
             foreach (XmlTemplate xt in xmlTemplateList)
             {
                 if (xt.Name == _xt.Name)
+                {
+                    Debug.Log("already exist same name...");
                     return false;
+                }
             }
             
             xmlTemplateList.Add(_xt);
             return true;
+        }
+
+        public bool deleteListEnd()
+        {
+            if (xmlTemplateList.Count > 0)
+            {
+                xmlTemplateList.RemoveAt(xmlTemplateList.Count - 1);
+                return true;
+            }
+            Debug.Log("Not enough xmlTemplaetList... it is already empty");
+            return false;
+        }
+        public bool deleteList(XmlTemplate _xt) 
+        {
+            foreach (XmlTemplate xt in xmlTemplateList)
+            {
+                if (xt.Name == _xt.Name)
+                {
+                    xmlTemplateList.Remove(xt);
+                    return true;
+                }
+            }
+            Debug.Log("Not found the name given...");
+            return false;
         }
 
         public List<string> getListofAllName()

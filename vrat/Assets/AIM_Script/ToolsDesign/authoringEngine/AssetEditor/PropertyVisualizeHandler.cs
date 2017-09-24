@@ -88,8 +88,7 @@ namespace vrat
 
             currForm = propertyValueTemplate.transform.GetChild(templateIdx).gameObject;
 
-            Debug.Log("Prop. Type: " + vp.ToString());
-            Debug.Log(templateIdx);
+            
 
             if (vp == VISUALIZEPROPTYPE.DROPDOWN)
             {

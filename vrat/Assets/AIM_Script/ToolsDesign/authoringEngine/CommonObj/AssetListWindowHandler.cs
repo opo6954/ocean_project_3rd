@@ -52,6 +52,9 @@ namespace vrat
 
         //모든 asset의 정보 list
         protected List<AuthorableAsset> authorableAssetList = new List<AuthorableAsset>();
+
+        public static List<AuthorableAsset> authorableAssetListGlobal = new List<AuthorableAsset>();
+
         
         //asset을 double click했을 때 각 editor로 가는 callback 함수
         public delegate void OnDoubleClickForEditor(string filename, AuthorableAsset aa, Texture2D prevImg);
@@ -231,6 +234,7 @@ namespace vrat
                 _aa.testDeserialize(fs.fullFileNamePath);
 
                 authorableAssetList.Add(_aa);
+                AssetListWindowHandler.authorableAssetListGlobal.Add(_aa);
 
             }
 

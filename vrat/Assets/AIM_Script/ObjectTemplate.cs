@@ -107,6 +107,7 @@ namespace vrat
                 }
             }
 
+            Debug.Log("Cannot found parameter named " + _paramName);
             return new NullXmlTemplate();
         }
 

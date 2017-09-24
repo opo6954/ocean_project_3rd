@@ -109,6 +109,11 @@ namespace vrat
 
         }
 
+        //add asset trigger 버튼을 누를 때임
+        public void OnAddAssetTrigger()
+        {
+            
+        }
 
         //asset parameter 정보를 입력된 값을 바탕으로 저장하자
         public void OnSaveAsset()

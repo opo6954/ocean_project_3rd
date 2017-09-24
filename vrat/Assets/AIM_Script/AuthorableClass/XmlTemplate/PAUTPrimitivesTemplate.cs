@@ -151,7 +151,7 @@ namespace vrat
     {
         //얘를 가지고 있는 asset 이름
         protected string ownedAssetName = "";
-
+         
         //이 녀석을 붙일 수 있는 asset 타입임
         protected string attachedAssetType = "";
 
@@ -174,9 +174,9 @@ namespace vrat
 
         public static void CopyPAUT(PAUTPrimitivesTemplate origin, ref PAUTPrimitivesTemplate dest)
         {
-            
             dest.Name = origin.Name;
-
+            dest.ClassName = origin.ClassName;
+             
             //붙여진 asset 복사
             dest.ownedAssetName = origin.ownedAssetName;
 

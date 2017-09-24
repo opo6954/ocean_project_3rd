@@ -117,13 +117,18 @@
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\ChooseTypeManager.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\Connection.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\ConnectionPoint.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\DragMeEvent.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\DragMeTimeline.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\DropMeOnEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\EventListEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\Node.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\NodeBasedEditor.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\NodeLineManager.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\PrimitivesEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\TimelineEditor.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\ToggleGOwithButton.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\eventInnerTypeListManager.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\TimelineEditor\eventInnerTypeManager.cs" />
      <Compile Include="Assets\Elenesski Generic Move Camera\GenericMoveCamera.cs" />
      <Compile Include="Assets\Elenesski Generic Move Camera\GenericMoveCameraInputs.cs" />
      <Compile Include="Assets\NoesisGUI\Samples\Commands\Commands.cs" />
@@ -295,6 +300,7 @@
      <Compile Include="Assets\PhotonChatApi\ChatState.cs" />
      <Compile Include="Assets\PhotonChatApi\ChatUserStatus.cs" />
      <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
+     <Compile Include="Assets\Resources\TimelineEditor\eventUIManager.cs" />
      <Compile Include="Assets\Resources\TimelineEditor\primitivesUIManager.cs" />
      <Compile Include="Assets\SUIMONO - WATER SYSTEM 2\SCRIPTS\Random.cs" />
      <Compile Include="Assets\SUIMONO - WATER SYSTEM 2\SCRIPTS\SuimonoCamera_depth.cs" />

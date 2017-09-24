@@ -27,6 +27,9 @@ namespace vrat
 
         string envPrefabPath;
         string charPrefabPath;
+
+        //global로 넘겨주자
+        public static AuthorableRoom _currRoomGlobal;
          
 
         public override void initialize()
@@ -64,6 +67,9 @@ namespace vrat
                 currRoomObject = GameObject.Instantiate(Resources.Load(envPrefabPath + prefabName), new Vector3(), Quaternion.Euler(50, -30, 0), environmentParent.transform) as GameObject;
                 currRoomObject.transform.localPosition = new Vector3();
                 currRoomObject.transform.localRotation = Quaternion.Euler(50, -30, 0);
+
+                //global로 room 정보 넣어주기
+                _currRoomGlobal = currRoom;
                 
                 fpsChar.changeView();
 

@@ -12,7 +12,7 @@ namespace vrat
     { 
         [SerializeField]
         UnityEngine.UI.Text myText;
-
+        
         [SerializeField]
         UnityEngine.UI.Image myImage;
          
@@ -29,6 +29,8 @@ namespace vrat
 
         public delegate void OnDragCallback(int myIdx);
         public OnDragCallback callbackDrag;
+
+        public Texture2D currImg;
 
 
         public UnityEngine.UI.Button button;
@@ -91,14 +93,16 @@ namespace vrat
             button = GetComponent<UnityEngine.UI.Button>();
             button.onClick.AddListener(delegate{ callback(idx); });
         }
-
-        public void setOnDragListener(OnDragCallback _callback)
+         
+        public virtual void setOnDragListener(OnDragCallback _callback)
         {
             callbackDrag = _callback;
         }
 
         //drag start할 떄의 event
-        public void OnDragStart()
+        //assetlist --> primitives로 갈 수도 있고
+        //primitives --> timeline으로 갈 수도 있다.
+        public virtual void OnDragStart()
         {
             //drag callback 전해주기
             callbackDrag(idx);
@@ -125,6 +129,8 @@ namespace vrat
             {
                 return false;
             }
+
+            currImg = _texture;
 
             myImage.sprite = Sprite.Create(_texture, new Rect(0, 0, _texture.width, _texture.height), new Vector2(0.5f, 0.5f));
             return true;
