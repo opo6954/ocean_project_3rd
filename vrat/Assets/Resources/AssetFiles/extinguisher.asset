@@ -13,7 +13,7 @@
         <z>0</z>
       </Rotation>
     </vrat.LocationXmlTemplate>
-    <vrat.ListOfXmlTemplate name="HoldGestureType" type="ListOfXmlTemplate" idx="1">
+    <vrat.ListOfXmlTemplate name="HoldGestureType" type="ListOfXmlTemplate" idx="0">
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownZ" type="string" contents="z" />
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownX" type="string" contents="x" />
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownC" type="string" contents="c" />
@@ -22,5 +22,23 @@
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownZ" type="string" contents="z" />
       <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownX" type="string" contents="x" />
     </vrat.ListOfXmlTemplate>
+    <vrat.AssetTriggerXmlTemplate name="AssetTrigger" type="">
+      <TriggerType name="TriggerType" type="STRING" contents="MonitorDistanceCapturedTrigger" />
+      <ActionList>
+        <vrat.ListOfXmlTemplate name="ActionList" type="ListOfXmlTemplate" idx="0">
+          <vrat.PrimitiveXmlTemplate name="actionList0" type="string" contents="ActiveRender" />
+          <vrat.PrimitiveXmlTemplate name="actionList1" type="string" contents="DeativeRender" />
+          <vrat.PrimitiveXmlTemplate name="actionList2" type="string" contents="StartParticle" />
+          <vrat.PrimitiveXmlTemplate name="actionList3" type="string" contents="StopParticle" />
+        </vrat.ListOfXmlTemplate>
+      </ActionList>
+      <ParamList>
+        <vrat.ListOfXmlTemplate name="ParamList" type="ListOfXmlTemplate" idx="0">
+          <vrat.PrimitiveXmlTemplate name="paramList0" type="string" contents="0" />
+          <vrat.PrimitiveXmlTemplate name="paramList1" type="string" contents="97" />
+          <vrat.PrimitiveXmlTemplate name="paramList2" type="string" contents="3" />
+        </vrat.ListOfXmlTemplate>
+      </ParamList>
+    </vrat.AssetTriggerXmlTemplate>
   </CustomizedProperty>
 </ASSET>

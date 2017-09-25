@@ -11,7 +11,7 @@ namespace vrat
     public class PrimitiveXmlTemplate : XmlTemplate
     {
         string variable="";
-
+         
 
         public override System.Xml.XmlElement XmlSerialize(System.Xml.XmlDocument document, System.Xml.XmlElement parentElement, bool isRoot)
         {
@@ -25,8 +25,8 @@ namespace vrat
             individualProperty.SetAttribute("name", propertyName);
             individualProperty.SetAttribute("type", propertyType);
             individualProperty.SetAttribute("contents", propertyValue);
-
-
+             
+             
             return individualProperty;
         }
 

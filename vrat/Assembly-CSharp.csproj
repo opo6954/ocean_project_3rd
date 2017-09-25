@@ -55,6 +55,7 @@
      <Compile Include="Assets\AIM_Script\AuthorableClass\AuthorableTemplate.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\AuthorableTimeline.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\ActionPrimitivesTemplate.cs" />
+     <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\AssetTriggerXmlTemplate.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\ClassNameXmlTemplate.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\InstPrimitivesTemplate.cs" />
      <Compile Include="Assets\AIM_Script\AuthorableClass\XmlTemplate\ListOfXmlTemplate.cs" />
@@ -89,6 +90,7 @@
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\AssetEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\AssetEditor_back.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\AssetFileIOHandler.cs" />
+     <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\AssetTriggerEditor.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\DirectoryUIHandler.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\FileUITemplateManager.cs" />
      <Compile Include="Assets\AIM_Script\ToolsDesign\authoringEngine\AssetEditor\PropertyUIHandler.cs" />

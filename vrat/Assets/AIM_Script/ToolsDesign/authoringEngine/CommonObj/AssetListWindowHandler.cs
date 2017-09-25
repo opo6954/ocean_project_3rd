@@ -71,7 +71,7 @@ namespace vrat
 
         CURREDITORTYPE currFloatingEditorWindow;
 
-
+         
         public void setCurrEditorWindow(string _type)
         {
             CURREDITORTYPE _cet;
@@ -144,6 +144,9 @@ namespace vrat
 
 
                 currAsset = authorableAssetList[idx];
+
+                
+
 
                 //최근 열린 editortype에 따라서 다른 callback 함수를 부르기
                 switch (currFloatingEditorWindow)
@@ -235,6 +238,8 @@ namespace vrat
 
                 authorableAssetList.Add(_aa);
                 AssetListWindowHandler.authorableAssetListGlobal.Add(_aa);
+
+                
 
             }
 

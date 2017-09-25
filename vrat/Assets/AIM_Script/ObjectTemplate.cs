@@ -205,6 +205,7 @@ namespace vrat
 
         public virtual void testDeserialize(string fileName)
         {
+            Debug.Log("Deserialize for " + fileName.ToString());
             XmlDocument ppa = new XmlDocument();
 
             ppa.Load(fileName);
@@ -248,6 +249,8 @@ namespace vrat
         {
             variableContainer.clearVariableAll();
 
+            
+
             if (rootNode.Name != ObjectType.ToString())
             {
                 Debug.Log("not equal for rootNode Name and obj type");
@@ -278,7 +281,7 @@ namespace vrat
             return true;
         }
 
-        protected bool deserializeChildEachInside(XmlNodeList xnList)
+        protected virtual bool deserializeChildEachInside(XmlNodeList xnList)
         {
             foreach (XmlNode xn in xnList)
             {
@@ -292,10 +295,12 @@ namespace vrat
                 else
                 {
                     XmlTemplate xt = createInstanceListElement(xn);
+
                     if (variableContainer.checkParameter(xt.Name) == true)
                     {
                         Debug.Log("Already exist for " + xt.Name);
                     }
+                    
                     variableContainer.addParameter(xt);
                 }
             }
@@ -306,7 +311,7 @@ namespace vrat
         //일단 돌리기
 
         //list of list of xmlTemplate은 생각하지 말자......... 쓰지마!!
-        private XmlTemplate deserializeChildEachForList(XmlNode _node)
+        protected XmlTemplate deserializeChildEachForList(XmlNode _node)
         {
             
             XmlAttributeCollection xac = _node.Attributes;
@@ -339,7 +344,7 @@ namespace vrat
         //이미 있는 것에서 찾아서 해도 됨
 
 
-        private XmlTemplate createInstanceListElement(XmlNode _node)
+        protected virtual XmlTemplate createInstanceListElement(XmlNode _node)
         {
             XmlAttributeCollection xac = _node.Attributes;
 
@@ -395,7 +400,13 @@ namespace vrat
 
                 return ipt;
             }
+            else if (_node.Name == "vrat.AssetTriggerXmlTemplate")
+            {
+                AssetTriggerXmlTemplate atxt = new AssetTriggerXmlTemplate(name, type);
+                atxt.deserializeFromXml(_node);
 
+                return atxt;
+            }
             else
             {
                 Debug.Log("No deserializer found for " + _node.Name);

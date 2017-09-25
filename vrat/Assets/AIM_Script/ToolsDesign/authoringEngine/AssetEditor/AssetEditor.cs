@@ -19,7 +19,7 @@ namespace vrat
         //in-situ placement를 위해서 있음
         [SerializeField]
         ViewChanger fpsChar;
-
+         
         [SerializeField]
         InsituEditor insituEditor;
 
@@ -43,6 +43,10 @@ namespace vrat
         //추가적인 정보 전달을 위한 subwindow instance
         [SerializeField]
         SubwindowManager subWindow;
+
+        //asset trigger를 관리하는 editor
+        [SerializeField]
+        AssetTriggerEditor assetTriggerEditor;
 
         //asset의 propertyUI prefab을 관장하는 녀석
         Object propertyUIPrefab;
@@ -110,9 +114,56 @@ namespace vrat
         }
 
         //add asset trigger 버튼을 누를 때임
-        public void OnAddAssetTrigger()
+        //이제 asset trigger를 저장해야 할텐데...
+
+        public void OnAddAssetTriggerButton()
         {
-            
+            assetTriggerEditor.gameObject.SetActive(true);
+            if (currAssetInfo.assetTriggerXmlTemplate.actionList.Count == 0)
+            {
+                assetTriggerEditor.OnGetAssetTriggerInfo();
+            }
+            else
+            {
+                string triggerType = currAssetInfo.assetTriggerXmlTemplate.assetTriggerType;
+                string[] actionList = new string[currAssetInfo.assetTriggerXmlTemplate.actionList.Count];
+                string[] paramList = new string[currAssetInfo.assetTriggerXmlTemplate.paramList.Count];
+
+                for (int i = 0; i < currAssetInfo.assetTriggerXmlTemplate.actionList.Count; i++)
+                {
+                    actionList[i] = currAssetInfo.assetTriggerXmlTemplate.actionList[i];
+                }
+
+                for (int i = 0; i < currAssetInfo.assetTriggerXmlTemplate.paramList.Count; i++)
+                {
+                    paramList[i] = currAssetInfo.assetTriggerXmlTemplate.paramList[i];
+                }
+                //넘겨주기
+                assetTriggerEditor.OnGetAssetTriggerInfo(triggerType, actionList, paramList);
+            }
+            //assetTriggerEditor.OnGetAssetTriggerInfo(
+            //assetTriggerEditor.
+        }
+
+        public void OnAddAssetTrigger(string triggerType, string[] actionList, string[] paramList)
+        {
+            assetTriggerEditor.gameObject.SetActive(false);
+            Debug.Log("Trigger Type: " + triggerType);
+
+            currAssetInfo.assetTriggerXmlTemplate.actionList.Clear();
+            currAssetInfo.assetTriggerXmlTemplate.paramList.Clear();
+
+            currAssetInfo.assetTriggerXmlTemplate.assetTriggerType = triggerType;
+            for (int i = 0; i < actionList.Length; i++)
+            {
+                Debug.Log("Action " + i.ToString() + " : " + actionList[i]);
+                currAssetInfo.assetTriggerXmlTemplate.actionList.Add(actionList[i]);
+            }
+            for (int i = 0; i < paramList.Length; i++)
+            {
+                Debug.Log("Param " + i.ToString() + " : " + paramList[i]);
+                currAssetInfo.assetTriggerXmlTemplate.paramList.Add(paramList[i]);
+            }
         }
 
         //asset parameter 정보를 입력된 값을 바탕으로 저장하자
@@ -163,6 +214,8 @@ namespace vrat
             assetListWindowHandler.initialize();
             assetListWindowHandler.UpdateFileLists();
         }
+
+        
 
         // Use this for initialization
         void Start()

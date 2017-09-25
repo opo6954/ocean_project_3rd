@@ -1,0 +1,21 @@
+<ASSET name="phone">
+  <CustomizedProperty>
+    <vrat.PrimitiveXmlTemplate name="IsGraspable" type="bool" contents="false" />
+    <vrat.LocationXmlTemplate name="Location" type="location">
+      <Position>
+        <x>29.70758</x>
+        <y>-4.199989</y>
+        <z>16.87495</z>
+      </Position>
+      <Rotation>
+        <x>0</x>
+        <y>150.8001</y>
+        <z>0</z>
+      </Rotation>
+    </vrat.LocationXmlTemplate>
+    <vrat.ListOfXmlTemplate name="ReportGestureType" type="ListOfXmlTemplate" idx="0">
+      <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownX" type="string" contents="x" />
+      <vrat.PrimitiveXmlTemplate name="KeyboardButtonDownC" type="string" contents="c" />
+    </vrat.ListOfXmlTemplate>
+  </CustomizedProperty>
+</ASSET>
